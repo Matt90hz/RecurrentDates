@@ -1,0 +1,4 @@
+﻿Tuesday,0,0,0
+Friday,10,15,30
+Friday,12,45,0
+Friday,18,0,0

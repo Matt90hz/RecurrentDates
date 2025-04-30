@@ -1,0 +1,99 @@
+﻿{
+  Weekly: {
+    Monthly: null,
+    On: [
+      {
+        Monthly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Monday,
+        At: []
+      },
+      {
+        Monthly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Tuesday,
+        At: []
+      },
+      {
+        Monthly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Wednesday,
+        At: []
+      },
+      {
+        Monthly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Thursday,
+        At: [
+          {
+            Hour: 8,
+            Minutely: {
+              Minute: 0,
+              Secondly: null
+            }
+          }
+        ]
+      },
+      {
+        Monthly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Friday,
+        At: [
+          {
+            Hour: 8,
+            Minutely: {
+              Minute: 15,
+              Secondly: {
+                Second: 0
+              }
+            }
+          }
+        ]
+      },
+      {
+        Monthly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Saturday,
+        At: [
+          {
+            Hour: 8,
+            Minutely: {
+              Minute: 15,
+              Secondly: {
+                Second: 0
+              }
+            }
+          }
+        ]
+      },
+      {
+        Monthly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Sunday,
+        At: [
+          {
+            Hour: 9,
+            Minutely: {
+              Minute: 15,
+              Secondly: {
+                Second: 30
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  Monthly: null,
+  DayOfMonth: 0,
+  DayInMonth: First,
+  DayOfWeek: Sunday,
+  At: []
+}

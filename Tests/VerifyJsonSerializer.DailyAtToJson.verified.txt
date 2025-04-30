@@ -1,0 +1,16 @@
+﻿{
+  "Daily": {
+    "At": {
+      "Time0": {
+        "Hour": 10,
+        "Minute": 15,
+        "Second": 30
+      },
+      "Time1": {
+        "Hour": 17,
+        "Minute": 30,
+        "Second": 45
+      }
+    }
+  }
+}

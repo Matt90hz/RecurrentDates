@@ -1,0 +1,620 @@
+﻿{
+  Yearly: null,
+  Month: 0,
+  TheDay: [
+    {
+      Weekly: null,
+      DayOfMonth: 15,
+      DayInMonth: First,
+      DayOfWeek: Sunday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    }
+  ],
+  InDay: [
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: First,
+      DayOfWeek: Monday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Second,
+      DayOfWeek: Monday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Third,
+      DayOfWeek: Monday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Fourth,
+      DayOfWeek: Monday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Last,
+      DayOfWeek: Monday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: First,
+      DayOfWeek: Tuesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Second,
+      DayOfWeek: Tuesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Third,
+      DayOfWeek: Tuesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Fourth,
+      DayOfWeek: Tuesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Last,
+      DayOfWeek: Tuesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: First,
+      DayOfWeek: Wednesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Second,
+      DayOfWeek: Wednesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Third,
+      DayOfWeek: Wednesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Fourth,
+      DayOfWeek: Wednesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Last,
+      DayOfWeek: Wednesday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: First,
+      DayOfWeek: Thursday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Second,
+      DayOfWeek: Thursday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Third,
+      DayOfWeek: Thursday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Fourth,
+      DayOfWeek: Thursday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Last,
+      DayOfWeek: Thursday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: First,
+      DayOfWeek: Friday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Second,
+      DayOfWeek: Friday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Third,
+      DayOfWeek: Friday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Fourth,
+      DayOfWeek: Friday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Last,
+      DayOfWeek: Friday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: First,
+      DayOfWeek: Saturday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Second,
+      DayOfWeek: Saturday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Third,
+      DayOfWeek: Saturday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Fourth,
+      DayOfWeek: Saturday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Last,
+      DayOfWeek: Saturday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: First,
+      DayOfWeek: Sunday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Second,
+      DayOfWeek: Sunday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Third,
+      DayOfWeek: Sunday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Fourth,
+      DayOfWeek: Sunday,
+      At: [
+        {
+          Hour: 0,
+          Minutely: {
+            Minute: 0,
+            Secondly: {
+              Second: 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      Weekly: null,
+      DayOfMonth: 0,
+      DayInMonth: Last,
+      DayOfWeek: Sunday,
+      At: [
+        {
+          Hour: 17,
+          Minutely: {
+            Minute: 30,
+            Secondly: {
+              Second: 45
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

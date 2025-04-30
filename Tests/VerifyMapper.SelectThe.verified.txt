@@ -1,0 +1,30 @@
+﻿[
+  [
+    {
+      Occurrence: 12,
+      Hour: 0,
+      Minute: 0,
+      Second: 0
+    }
+  ],
+  [
+    {
+      Occurrence: Second-Friday,
+      Hour: 10,
+      Minute: 15,
+      Second: 30
+    },
+    {
+      Occurrence: Second-Friday,
+      Hour: 12,
+      Minute: 45,
+      Second: 0
+    },
+    {
+      Occurrence: Second-Friday,
+      Hour: 18,
+      Minute: 0,
+      Second: 0
+    }
+  ]
+]

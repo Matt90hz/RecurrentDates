@@ -1,0 +1,69 @@
+﻿{
+  "Weekly": {
+    "On": {
+      "Monday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Tuesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Wednesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Thursday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Friday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Saturday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Sunday": {
+        "At": {
+          "Time0": {
+            "Hour": 17,
+            "Minute": 30,
+            "Second": 45
+          }
+        }
+      }
+    }
+  }
+}

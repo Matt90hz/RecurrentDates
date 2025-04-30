@@ -1,0 +1,8 @@
+﻿{
+  Yearly: {
+    In: []
+  },
+  Month: 0,
+  TheDay: [],
+  InDay: []
+}

@@ -1,0 +1,80 @@
+﻿{
+  Yearly: {
+    In: [
+      {
+        Month: 1,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 2,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 3,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 5,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 6,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 7,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 8,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 9,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 10,
+        TheDay: [],
+        InDay: []
+      },
+      {
+        Month: 11,
+        TheDay: [],
+        InDay: [
+          {
+            Weekly: null,
+            DayOfMonth: 0,
+            DayInMonth: Second,
+            DayOfWeek: Monday,
+            At: []
+          }
+        ]
+      },
+      {
+        Month: 12,
+        TheDay: [
+          {
+            Weekly: null,
+            DayOfMonth: 15,
+            DayInMonth: First,
+            DayOfWeek: Sunday,
+            At: []
+          }
+        ],
+        InDay: []
+      }
+    ]
+  },
+  Month: 0,
+  TheDay: [],
+  InDay: []
+}

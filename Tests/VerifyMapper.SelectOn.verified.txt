@@ -1,0 +1,30 @@
+﻿[
+  [
+    {
+      DayOfWeek: Tuesday,
+      Hour: 0,
+      Minute: 0,
+      Second: 0
+    }
+  ],
+  [
+    {
+      DayOfWeek: Friday,
+      Hour: 10,
+      Minute: 15,
+      Second: 30
+    },
+    {
+      DayOfWeek: Friday,
+      Hour: 12,
+      Minute: 45,
+      Second: 0
+    },
+    {
+      DayOfWeek: Friday,
+      Hour: 18,
+      Minute: 0,
+      Second: 0
+    }
+  ]
+]

@@ -1,0 +1,162 @@
+﻿{
+  "Yearly": {
+    "In": {
+      "January": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "February": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "March": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "April": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "May": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "June": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "July": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "August": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "September": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "October": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "November": {
+        "The": {
+          "15": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "December": {
+        "The": {
+          "Fourth-Monday": {
+            "At": {
+              "Time0": {
+                "Hour": 9,
+                "Minute": 15,
+                "Second": 30
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

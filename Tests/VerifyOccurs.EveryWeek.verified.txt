@@ -1,0 +1,11 @@
+﻿{
+  Weekly: {
+    Monthly: null,
+    On: []
+  },
+  Monthly: null,
+  DayOfMonth: 0,
+  DayInMonth: First,
+  DayOfWeek: Sunday,
+  At: []
+}

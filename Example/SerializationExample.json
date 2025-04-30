@@ -1,0 +1,72 @@
+{
+  "Yearly": {
+    "In": {
+      "May": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      },
+      "April": {
+        "The": {
+          "15": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          },
+          "FirstWeek": {
+            "On": {
+              "Monday": {
+                "At": {
+                  "Time0": {
+                    "Hour": 0,
+                    "Minute": 0,
+                    "Second": 0
+                  }
+                }
+              }
+            }
+          },
+          "SecondWeek": {
+            "On": {
+              "Monday": {
+                "At": {
+                  "Time0": {
+                    "Hour": 0,
+                    "Minute": 0,
+                    "Second": 0
+                  }
+                }
+              },
+              "Friday": {
+                "At": {
+                  "Time0": {
+                    "Hour": 9,
+                    "Minute": 30,
+                    "Second": 0
+                  },
+                  "Time1": {
+                    "Hour": 12,
+                    "Minute": 45,
+                    "Second": 20
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

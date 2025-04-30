@@ -1,0 +1,17 @@
+﻿[
+  {
+    Item1: 10,
+    Item2: 15,
+    Item3: 30
+  },
+  {
+    Item1: 12,
+    Item2: 45,
+    Item3: 0
+  },
+  {
+    Item1: 18,
+    Item2: 0,
+    Item3: 0
+  }
+]

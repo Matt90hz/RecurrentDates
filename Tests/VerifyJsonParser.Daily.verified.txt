@@ -1,0 +1,27 @@
+﻿{
+  Weekly: null,
+  Monthly: null,
+  DayOfMonth: 0,
+  DayInMonth: First,
+  DayOfWeek: Sunday,
+  At: [
+    {
+      Hour: 10,
+      Minutely: {
+        Minute: 15,
+        Secondly: {
+          Second: 30
+        }
+      }
+    },
+    {
+      Hour: 17,
+      Minutely: {
+        Minute: 30,
+        Secondly: {
+          Second: 45
+        }
+      }
+    }
+  ]
+}

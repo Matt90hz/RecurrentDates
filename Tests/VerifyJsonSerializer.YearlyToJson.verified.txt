@@ -1,0 +1,19 @@
+﻿{
+  "Yearly": {
+    "In": {
+      "January": {
+        "The": {
+          "1": {
+            "At": {
+              "Time0": {
+                "Hour": 0,
+                "Minute": 0,
+                "Second": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

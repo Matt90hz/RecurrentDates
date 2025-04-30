@@ -1,0 +1,80 @@
+﻿{
+  Monthly: {
+    Yearly: null,
+    Month: 0,
+    TheDay: [
+      {
+        Weekly: null,
+        DayOfMonth: 15,
+        DayInMonth: First,
+        DayOfWeek: Sunday,
+        At: []
+      },
+      {
+        Weekly: null,
+        DayOfMonth: 20,
+        DayInMonth: First,
+        DayOfWeek: Sunday,
+        At: [
+          {
+            Hour: 10,
+            Minutely: {
+              Minute: 15,
+              Secondly: {
+                Second: 30
+              }
+            }
+          }
+        ]
+      }
+    ],
+    InDay: [
+      {
+        Weekly: null,
+        DayOfMonth: 0,
+        DayInMonth: First,
+        DayOfWeek: Monday,
+        At: []
+      },
+      {
+        Weekly: null,
+        DayOfMonth: 0,
+        DayInMonth: Second,
+        DayOfWeek: Monday,
+        At: []
+      },
+      {
+        Weekly: null,
+        DayOfMonth: 0,
+        DayInMonth: Third,
+        DayOfWeek: Monday,
+        At: []
+      },
+      {
+        Weekly: null,
+        DayOfMonth: 0,
+        DayInMonth: Fourth,
+        DayOfWeek: Monday,
+        At: []
+      },
+      {
+        Weekly: null,
+        DayOfMonth: 0,
+        DayInMonth: Last,
+        DayOfWeek: Monday,
+        At: [
+          {
+            Hour: 9,
+            Minutely: {
+              Minute: 30,
+              Secondly: {
+                Second: 45
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  On: []
+}

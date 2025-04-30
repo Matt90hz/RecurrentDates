@@ -1,0 +1,330 @@
+﻿{
+  "Monthly": {
+    "The": {
+      "15": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "First-Monday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Second-Monday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Third-Monday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Fourth-Monday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Last-Monday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "First-Tuesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Second-Tuesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Third-Tuesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Fourth-Tuesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Last-Tuesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "First-Wednesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Second-Wednesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Third-Wednesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Fourth-Wednesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Last-Wednesday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "First-Thursday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Second-Thursday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Third-Thursday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Fourth-Thursday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Last-Thursday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "First-Friday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Second-Friday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Third-Friday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Fourth-Friday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Last-Friday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "First-Saturday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Second-Saturday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Third-Saturday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Fourth-Saturday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Last-Saturday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "First-Sunday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Second-Sunday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Third-Sunday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Fourth-Sunday": {
+        "At": {
+          "Time0": {
+            "Hour": 0,
+            "Minute": 0,
+            "Second": 0
+          }
+        }
+      },
+      "Last-Sunday": {
+        "At": {
+          "Time0": {
+            "Hour": 17,
+            "Minute": 30,
+            "Second": 45
+          }
+        }
+      }
+    }
+  }
+}

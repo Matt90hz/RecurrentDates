@@ -1,0 +1,280 @@
+﻿{
+  In: [
+    {
+      Month: 1,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 2,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 3,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 4,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 5,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 6,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 7,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 8,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 9,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 10,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 1,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 11,
+      TheDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 15,
+          DayInMonth: First,
+          DayOfWeek: Sunday,
+          At: [
+            {
+              Hour: 0,
+              Minutely: {
+                Minute: 0,
+                Secondly: {
+                  Second: 0
+                }
+              }
+            }
+          ]
+        }
+      ],
+      InDay: []
+    },
+    {
+      Month: 12,
+      TheDay: [],
+      InDay: [
+        {
+          Weekly: null,
+          DayOfMonth: 0,
+          DayInMonth: Fourth,
+          DayOfWeek: Monday,
+          At: [
+            {
+              Hour: 9,
+              Minutely: {
+                Minute: 15,
+                Secondly: {
+                  Second: 30
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

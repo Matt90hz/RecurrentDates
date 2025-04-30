@@ -1,0 +1,9 @@
+﻿{
+  Monthly: {
+    Yearly: null,
+    Month: 0,
+    TheDay: [],
+    InDay: []
+  },
+  On: []
+}

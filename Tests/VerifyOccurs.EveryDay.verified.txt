@@ -1,0 +1,12 @@
+﻿{
+  Hour: 0,
+  Daily: {
+    Weekly: null,
+    Monthly: null,
+    DayOfMonth: 0,
+    DayInMonth: First,
+    DayOfWeek: Sunday,
+    At: []
+  },
+  Minutely: null
+}

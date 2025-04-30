@@ -1,0 +1,3 @@
+﻿Second,Friday,10,15,30
+Second,Friday,12,45,0
+Second,Friday,18,0,0
