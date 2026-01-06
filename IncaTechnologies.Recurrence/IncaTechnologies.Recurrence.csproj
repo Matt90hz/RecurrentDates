@@ -9,15 +9,17 @@
 		<NeutralLanguage>en</NeutralLanguage>
 		<PackageTags>recurrent;recurrence;dates;occurrences;events;</PackageTags>
 		<PackageOutputPath>.nupkg</PackageOutputPath>
-		<PackageReleaseNotes>1.0.0 - Realease</PackageReleaseNotes>
+		<PackageReleaseNotes>1.0.0 - Realease
+1.0.1 - Include documentation</PackageReleaseNotes>
 		<Description>Simple library to deal with recurrent events in a fluents style.
 It supports reccurences from every day to every year and implements enumerating, serializing and parsing.</Description>
 		<Title>Incatechnologies Recurrence</Title>
-		<VersionPrefix>1.0.0</VersionPrefix>
+		<VersionPrefix>1.0.1</VersionPrefix>
 		<PackageProjectUrl>https://github.com/Matt90hz/RecurrentDates/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Matt90hz/RecurrentDates.git</RepositoryUrl>
 		<Authors>Incatechnologies</Authors>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

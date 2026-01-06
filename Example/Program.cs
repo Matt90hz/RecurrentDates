@@ -1,4 +1,5 @@
 ﻿using IncaTechnologies.Recurrence;
+using System.Text;
 using System.Text.Json;
 using Recurrence = IncaTechnologies.Recurrence;
 
@@ -115,7 +116,8 @@ var mapped = ((IYearly)m.GetRoot())
         WeekDay = [..x.Then.SelectTheWeekDay(x => x.DayOfWeek)],
     });
 
- Console.WriteLine();
+Console.WriteLine();
+
 record VieModel
 {
     public int Month { get; set; }

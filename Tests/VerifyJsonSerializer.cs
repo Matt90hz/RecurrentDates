@@ -11,6 +11,7 @@ public class VerifyJsonSerializer
 
     [Fact]
     public Task DailyToJason() => Verify(Occurs.EveryDay().ToJson(JsonSerializerOptions));
+
     [Fact]
     public Task DailyAtToJson() => Verify(Occurs.EveryDay()
         .At(x =>
@@ -19,8 +20,10 @@ public class VerifyJsonSerializer
             x.Hour(17).Minute(30).Second(45);
         })
         .ToJson(JsonSerializerOptions));
+
     [Fact]
     public Task WeeklyToJson() => Verify(Occurs.EveryWeek().ToJson(JsonSerializerOptions));
+
     [Fact]
     public Task WeeklyOnToJson() => Verify(Occurs.EveryWeek()
         .On(x =>
@@ -33,8 +36,10 @@ public class VerifyJsonSerializer
             x.Saturday();
             x.Sunday().Hour(17).Minute(30).Second(45);
         }).ToJson(JsonSerializerOptions));
+
     [Fact]
     public Task MonthlyToJson() => Verify(Occurs.EveryMonth().ToJson(JsonSerializerOptions));
+
     [Fact]
     public Task MonthlyTheToJson() => Verify(Occurs.EveryMonth()
         .The(x =>
@@ -76,8 +81,10 @@ public class VerifyJsonSerializer
             x.FourthSunday();
             x.LastSunday().Hour(17).Minute(30).Second(45);
         }).ToJson(JsonSerializerOptions));
+
     [Fact]
     public Task YearlyToJson() => Verify(Occurs.EveryYear().ToJson(JsonSerializerOptions));
+
     [Fact]
     public Task YearlyInToJson() => Verify(Occurs.EveryYear()
         .In(x =>

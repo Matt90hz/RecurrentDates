@@ -5,7 +5,7 @@ namespace Tests;
 public class JsonParserTests
 {
     [Fact]
-    public void Parse_InvalidString_ShouldThrowArgumentExceptio()
+    public void Parse_InvalidString_ShouldThrowArgumentException()
     {
         // Arrange
         var invalidJson = "{}";

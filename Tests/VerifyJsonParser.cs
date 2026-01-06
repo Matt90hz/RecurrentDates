@@ -16,6 +16,7 @@ public class VerifyJsonParser
                 x.Hour(10).Minute(15).Second(30);
                 x.Hour(17).Minute(30).Second(45);
             }).ToJson()));
+
     [Fact]
     public Task Weekly() => Verify(JsonParser.Parse(
         Occurs.EveryWeek()
@@ -29,6 +30,7 @@ public class VerifyJsonParser
                 x.Saturday();
                 x.Sunday().Hour(17).Minute(30).Second(45);
             }).ToJson()));
+
     [Fact]
     public Task Monthly() => Verify(JsonParser.Parse(
         Occurs.EveryMonth()
@@ -71,6 +73,7 @@ public class VerifyJsonParser
                 x.FourthSunday();
                 x.LastSunday().Hour(17).Minute(30).Second(45);
             }).ToJson()));
+
     [Fact]
     public Task Yearly() => Verify(JsonParser.Parse(
         Occurs.EveryYear()
