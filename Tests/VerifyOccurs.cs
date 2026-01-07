@@ -7,6 +7,7 @@ public class VerifyOccurs
 {
     [Fact]
     public Task EveryDay() => Verify(Occurs.EveryDay() as Hourly);
+
     [Fact]
     public Task EveryDay_At() => Verify(Occurs.EveryDay().At(x =>
     {
@@ -14,8 +15,10 @@ public class VerifyOccurs
         x.Hour(12).Minute(15);
         x.Hour(17).Minute(30).Second(25);
     }) as Hourly);
+
     [Fact]
     public Task EveryWeek() => Verify(Occurs.EveryWeek() as Daily);
+
     [Fact]
     public Task EveryWeek_On() => Verify(Occurs.EveryWeek().On(x =>
     {
@@ -27,8 +30,10 @@ public class VerifyOccurs
         x.Saturday().Hour(8).Minute(15);;
         x.Sunday().Hour(9).Minute(15).Second(30); ;
     }) as Daily);
+
     [Fact]
     public Task EveryMonth() => Verify(Occurs.EveryMonth() as Weekly);
+
     [Fact]
     public Task EveryMonth_The() => Verify(Occurs.EveryMonth().The(x =>
     {
@@ -40,8 +45,10 @@ public class VerifyOccurs
         x.FourthMonday();
         x.LastMonday().Hour(9).Minute(30).Second(45); ;
     })as Weekly);
+
     [Fact]
     public Task EveryYear() => Verify(Occurs.EveryYear() as Monthly);
+
     [Fact]
     public Task EveryYear_In() => Verify(Occurs.EveryYear().In(x =>
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static JsonPropertyNames;
 
 namespace IncaTechnologies.Recurrence
 {
@@ -28,7 +28,7 @@ namespace IncaTechnologies.Recurrence
                 result = Parse(recurrence);
                 return true;
             }
-            catch (Exception)
+            catch (JsonException)
             {
                 result = null;
                 return false;
@@ -40,34 +40,11 @@ namespace IncaTechnologies.Recurrence
         /// </summary>
         /// <param name="recurrence">Json string.</param>
         /// <returns><see cref="IRecurrent"/> representation of the recurrence.</returns>
-        /// <exception cref="ArgumentException">The Json must contain valid recurrence keys.</exception>
+        /// <exception cref="JsonException">The Json must contain valid recurrence keys.</exception>
         public static IRecurrent Parse(string recurrence)
         {
             var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(recurrence));
-            return Parse(ref reader).GetRoot();
-
-            var jsonObject = JsonNode.Parse(recurrence).AsObject();
-
-            if (jsonObject.ContainsKey(JsonSerializer.DAILY_KEY))
-            {
-                return ParseDaily(jsonObject[JsonSerializer.DAILY_KEY]);
-            }
-            else if (jsonObject.ContainsKey(JsonSerializer.WEEKLY_KEY))
-            {
-                return ParseWeekly(jsonObject[JsonSerializer.WEEKLY_KEY]);
-            }
-            else if (jsonObject.ContainsKey(JsonSerializer.MONTHLY_KEY))
-            {
-                return ParseMonthly(jsonObject[JsonSerializer.MONTHLY_KEY]);
-            }
-            else if (jsonObject.ContainsKey(JsonSerializer.YEARLY_KEY))
-            {
-                return ParseYearly(jsonObject[JsonSerializer.YEARLY_KEY]);
-            }
-            else
-            {
-                throw new ArgumentException($"Impossible to parse the Json.\n{recurrence}");
-            }
+            return Parse(ref reader);
         }
 
         /// <summary>
@@ -78,25 +55,27 @@ namespace IncaTechnologies.Recurrence
         /// <exception cref="JsonException"></exception>
         public static IRecurrent Parse(ref Utf8JsonReader reader)
         {
+            IRecurrent recurrent = null;
+
             while (reader.Read())
             {
                 if (reader.TokenType is JsonTokenType.PropertyName && reader.GetString() is string name)
                 {
-                    if (name is JsonSerializer.YEARLY_KEY)
+                    if (name is YEARLY_KEY)
                     {
-                        return ParseYearly(ref reader, Occurs.EveryYear());
+                        recurrent = ParseYearly(ref reader, Occurs.EveryYear());
                     }
-                    else if (name is JsonSerializer.MONTHLY_KEY)
+                    else if (name is MONTHLY_KEY)
                     {
-                        return ParseMonthly(ref reader, Occurs.EveryMonth());
+                        recurrent = ParseMonthly(ref reader, Occurs.EveryMonth());
                     }
-                    else if (name is JsonSerializer.WEEKLY_KEY)
+                    else if (name is WEEKLY_KEY)
                     {
-                        return ParseWeekly(ref reader, Occurs.EveryWeek());
+                        recurrent = ParseWeekly(ref reader, Occurs.EveryWeek());
                     }
-                    else if (name is JsonSerializer.DAILY_KEY)
+                    else if (name is DAILY_KEY)
                     {
-                        return ParseDaily(ref reader, Occurs.EveryDay());
+                        recurrent = ParseDaily(ref reader, Occurs.EveryDay());
                     }
                     else
                     {
@@ -105,25 +84,10 @@ namespace IncaTechnologies.Recurrence
                 }
             }
 
-            throw new JsonException("Not found any property to start IRecurrent parsing.");
+            return recurrent is null 
+                ? throw new JsonException("Not found any property to start IRecurrent parsing.")
+                : recurrent.GetRoot();
         }
-
-
-        private static readonly IReadOnlyDictionary<string, int> _monthNumber = new Dictionary<string, int>()
-        {
-            ["January"] = 1,
-            ["February"] = 2,
-            ["March"] = 3,
-            ["April"] = 4,
-            ["May"] = 5,
-            ["June"] = 6,
-            ["July"] = 7,
-            ["August"] = 8,
-            ["September"] = 9,
-            ["October"] = 10,
-            ["November"] = 11,
-            ["December"] = 12,
-        };
 
         private static IRecurrent ParseYearly(ref Utf8JsonReader reader, IMonthly yearly)
         {
@@ -133,13 +97,13 @@ namespace IncaTechnologies.Recurrence
             {
                 if (reader.TokenType is JsonTokenType.PropertyName && reader.GetString() is string name)
                 {
-                    if (name is JsonSerializer.YEARLY_IN_KEY)
+                    if (name is YEARLY_IN_KEY)
                     {
                         inDepth = reader.CurrentDepth;
                         continue;
                     }
 
-                    if (_monthNumber.TryGetValue(name, out var monthNum))
+                    if (MonthNumber.TryGetValue(name, out var monthNum))
                     {
                         ParseMonthly(ref reader, yearly.Month(monthNum));
                     }
@@ -157,7 +121,7 @@ namespace IncaTechnologies.Recurrence
             {
                 if (reader.TokenType is JsonTokenType.PropertyName && reader.GetString() is string name)
                 {
-                    if (name is JsonSerializer.MONTHLY_THE_KEY)
+                    if (name is MONTHLY_THE_KEY)
                     {
                         theDepth = reader.CurrentDepth;
                         continue;
@@ -190,7 +154,7 @@ namespace IncaTechnologies.Recurrence
             {
                 if (reader.TokenType is JsonTokenType.PropertyName && reader.GetString() is string name)
                 {
-                    if (name is JsonSerializer.WEEKLY_ON_KEY)
+                    if (name is WEEKLY_ON_KEY)
                     {
                         onDepth = reader.CurrentDepth;
                         continue;
@@ -214,13 +178,13 @@ namespace IncaTechnologies.Recurrence
             {
                 if (reader.TokenType is JsonTokenType.PropertyName && reader.GetString() is string name)
                 {
-                    if (name is JsonSerializer.DAILY_AT_KEY)
+                    if (name is DAILY_AT_KEY)
                     {
                         atDepth = reader.CurrentDepth;
                         continue;
                     }
 
-                    if (name is JsonSerializer.HOURLY_KEY)
+                    if (name is HOURLY_KEY)
                     {
                         reader.Read();
                         var hour = reader.GetInt32();
@@ -237,95 +201,6 @@ namespace IncaTechnologies.Recurrence
             }
 
             return daily;
-        }
-
-        private static Daily ParseDaily(JsonNode node)
-        {
-            var daily = new Daily();
-            var times = node[JsonSerializer.DAILY_AT_KEY].AsObject().Select(x => x.Value);
-            foreach (var time in times)
-            {
-                var hourly = new Hourly();
-                var minutely = new Minutely();
-                var secondly = new Secondly();
-
-                hourly.Hour = time[JsonSerializer.HOURLY_KEY].GetValue<int>();
-                hourly.Daily = daily;
-                hourly.Minutely = minutely;
-                minutely.Minute = time[JsonSerializer.MINUTELY_KEY].GetValue<int>();
-                minutely.Hourly = hourly;
-                minutely.Secondly = secondly;
-                secondly.Second = time[JsonSerializer.SECONDLY_KEY].GetValue<int>();
-                secondly.Minutely = minutely;
-
-                daily.At.Add(hourly);
-            }
-
-            return daily;
-        }
-
-        private static Weekly ParseWeekly(JsonNode node)
-        {
-            var weekly = new Weekly();
-            var days = node[JsonSerializer.WEEKLY_ON_KEY].AsObject();
-            foreach (var day in days)
-            {
-                var daily = ParseDaily(day.Value);
-
-                daily.DayOfWeek = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), day.Key);
-                daily.Weekly = weekly;
-
-                weekly.On.Add(daily);
-            }
-
-            return weekly;
-        }
-
-        private static Monthly ParseMonthly(JsonNode node)
-        {
-            var monthly = new Monthly();
-            var weekliesOrDailies = node[JsonSerializer.MONTHLY_THE_KEY].AsObject();
-
-            foreach (var occurrence in weekliesOrDailies)
-            {
-                if (int.TryParse(occurrence.Key, out var day))
-                {
-                    var daily = ParseDaily(occurrence.Value);
-                    daily.DayOfMonth = day;
-                    daily.Monthly = monthly;
-
-                    monthly.TheDay.Add(daily);
-                }
-                else
-                {
-                    var daily = ParseDaily(occurrence.Value);
-                    var keySplit = occurrence.Key.Split('-');
-                    daily.DayInMonth = (DayInMonth)Enum.Parse(typeof(DayInMonth), keySplit[0]);
-                    daily.DayOfWeek = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), keySplit[1]);
-                    daily.Monthly = monthly;
-
-                    monthly.InDay.Add(daily);
-                }
-            }
-
-            return monthly;
-        }
-
-        private static Yearly ParseYearly(JsonNode node)
-        {
-            var yearly = new Yearly();
-            var occurrences = node[JsonSerializer.YEARLY_IN_KEY].AsObject();
-            var enCulture = CultureInfo.GetCultureInfo("en");
-            foreach (var occurrence in occurrences)
-            {
-                var monthly = ParseMonthly(occurrence.Value);
-                monthly.Month = DateTime.ParseExact(occurrence.Key, "MMMM", enCulture).Month;
-                monthly.Yearly = yearly;
-
-                yearly.In.Add(monthly);
-            }
-
-            return yearly;
         }
     }
 }

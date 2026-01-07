@@ -16,6 +16,7 @@ public class VerifyMapper
         var daily = recurrence.GetRoot() as IDaily;
         return Verify(daily.SelectAt(x => x));
     }
+
     [Fact]
     public Task SelectOn()
     {
@@ -29,9 +30,12 @@ public class VerifyMapper
                 x.Hour(18);
             });
         });
+
         var weekly = recurrence.GetRoot() as IWeekly;
+
         return Verify(weekly.SelectOn(on => on.Then.SelectAt(at => new { on.DayOfWeek, at.Hour, at.Minute, at.Second })));
     }
+
     [Fact]
     public Task SelectThe()
     {
@@ -45,11 +49,14 @@ public class VerifyMapper
                 x.Hour(18);
             });
         });
+
         var monthly = recurrence.GetRoot() as IMonthly;
+
         return Verify(monthly.SelectThe(
             the => the.Then.SelectAt(at => new { Occurrence = the.DayOfMonth.ToString(), at.Hour, at.Minute, at.Second }),
             the => the.Then.SelectAt(at => new { Occurrence = $"{the.DayInMonth}-{the.DayOfWeek}", at.Hour, at.Minute, at.Second })));
     }
+
     [Fact]
     public Task SelectTheDay()
     {
@@ -63,11 +70,14 @@ public class VerifyMapper
                 x.Hour(18);
             });
         });
+
         var monthly = recurrence.GetRoot() as IMonthly;
+
         return Verify(monthly
             .SelectTheDay(the => the.Then
                 .SelectAt(at => new { Occurrence = the.DayOfMonth.ToString(), at.Hour, at.Minute, at.Second })));
     }
+
     [Fact]
     public Task SelectTheWeekDay()
     {
@@ -81,11 +91,14 @@ public class VerifyMapper
                 x.Hour(18);
             });
         });
+
         var monthly = recurrence.GetRoot() as IMonthly;
+
         return Verify(monthly
             .SelectTheWeekDay(the => the.Then
                 .SelectAt(at => new { Occurrence = $"{the.DayInMonth}-{the.DayOfWeek}", at.Hour, at.Minute, at.Second })));
     }
+
     [Fact]
     public Task SelectIn()
     {
@@ -103,7 +116,9 @@ public class VerifyMapper
                 });
             });
         });
+
         var yearly = recurrence.GetRoot() as IYearly;
+
         return Verify(yearly
             .SelectIn(@in => @in.Then.SelectThe(
                 the => the.Then.SelectAt(at => new

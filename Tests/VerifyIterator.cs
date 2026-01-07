@@ -23,7 +23,9 @@ public class VerifyIterator
                 });
             });
         });
+
         var sb = new StringBuilder();
+
         (recurrence.GetRoot() as IYearly)
             .ForEachIn(@in =>
             {
@@ -45,8 +47,10 @@ public class VerifyIterator
                         });
                     });
             });
+
         return Verify(sb.ToString());
     }
+
     [Fact]
     public Task ForEachThe()
     {
@@ -60,7 +64,9 @@ public class VerifyIterator
                 x.Hour(18);
             });
         });
+
         var sb = new StringBuilder();
+
         (recurrence.GetRoot() as IMonthly)
             .ForEachThe(
                 the =>
@@ -79,8 +85,10 @@ public class VerifyIterator
                         sb.AppendLine();
                     });
                 });
+
         return Verify(sb.ToString());
     }
+
     [Fact]
     public Task ForEachTheDay()
     {
@@ -94,7 +102,9 @@ public class VerifyIterator
                 x.Hour(18);
             });
         });
+
         var sb = new StringBuilder();
+
         (recurrence.GetRoot() as IMonthly)
             .ForEachTheDay(the =>
             {
@@ -104,8 +114,10 @@ public class VerifyIterator
                     sb.AppendLine();
                 });
             });
+
         return Verify(sb.ToString());
     }
+
     [Fact]
     public Task ForEachTheWeekDay()
     {
@@ -119,7 +131,9 @@ public class VerifyIterator
                 x.Hour(18);
             });
         });
+
         var sb = new StringBuilder();
+
         (recurrence.GetRoot() as IMonthly)
             .ForEachTheWeekDay(the =>
             {
@@ -129,8 +143,10 @@ public class VerifyIterator
                     sb.AppendLine();
                 });
             });
+
         return Verify(sb.ToString());
     }
+
     [Fact]
     public Task ForEachOn()
     {
@@ -144,7 +160,9 @@ public class VerifyIterator
                 x.Hour(18);
             });
         });
+
         var sb = new StringBuilder();
+
         (recurrence.GetRoot() as IWeekly)
             .ForEachOn(on =>
             {
@@ -154,8 +172,10 @@ public class VerifyIterator
                     sb.AppendLine();
                 });
             });
+
         return Verify(sb.ToString());
     }
+
     [Fact]
     public Task ForEachAt()
     {
@@ -165,13 +185,16 @@ public class VerifyIterator
             x.Hour(12).Minute(45);
             x.Hour(18);
         });
+
         var sb = new StringBuilder();
+
         (recurrence.GetRoot() as IDaily)
             .ForEachAt(x =>
             {
                 sb.AppendJoin(',', x.Hour, x.Minute, x.Second);
                 sb.AppendLine();
             });
+
         return Verify(sb.ToString());
     }
 }

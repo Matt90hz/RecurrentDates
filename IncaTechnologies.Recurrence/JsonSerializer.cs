@@ -1,10 +1,8 @@
 ﻿using System.Text.Json;
 using System;
-using System.Globalization;
 using System.Text.Json.Nodes;
-using System.Runtime.CompilerServices;
 using System.Linq;
-using System.Collections.Generic;
+using static JsonPropertyNames;
 
 namespace IncaTechnologies.Recurrence
 {
@@ -13,24 +11,15 @@ namespace IncaTechnologies.Recurrence
     /// </summary>
     public static class JsonSerializer
     {
-        internal const string HOURLY_KEY = "Hour";
-        internal const string MINUTELY_KEY = "Minute";
-        internal const string SECONDLY_KEY = "Second";
-        internal const string DAILY_KEY = "Daily";
-        internal const string DAILY_AT_KEY = "At";
-        internal const string WEEKLY_KEY = "Weekly";
-        internal const string WEEKLY_ON_KEY = "On";
-        internal const string MONTHLY_KEY = "Monthly";
-        internal const string MONTHLY_THE_KEY = "The";
-        internal const string YEARLY_KEY = "Yearly";
-        internal const string YEARLY_IN_KEY = "In";
         /// <summary>
         /// Serialize an IRecurrent instance into a Json string.
         /// </summary>
         /// <param name="recurrence">The recurrence to serialize.</param>
         /// <param name="options">Options for the serialization.</param>
         /// <returns>Json string that represents the <paramref name="recurrence"/>.</returns>
-        public static string ToJson(this IRecurrent recurrence, JsonSerializerOptions options = null) => recurrence.ToJsonObject().ToJsonString(options);
+        public static string ToJson(this IRecurrent recurrence, JsonSerializerOptions options = null) 
+            => recurrence.ToJsonObject().ToJsonString(options);
+
         internal static JsonObject ToJsonObject(this IRecurrent recurrent)
         {
             var ancestor = recurrent.GetRoot();
@@ -56,6 +45,7 @@ namespace IncaTechnologies.Recurrence
                 throw new Exception($"Ancestor not found. Type evaluated: '{recurrent.GetType().Name}'.");
             }
         }
+
         private static JsonObject ToJsonObject(this IDaily daily)
         {
             var occurrences = daily
@@ -67,15 +57,19 @@ namespace IncaTechnologies.Recurrence
                 })
                 .Select((x, i) => (Key: $"Time{i}", Val: x))
                 .Aggregate(new JsonObject(), (json, x) => { json[x.Key] = x.Val; return json; });
+
             return new JsonObject { [DAILY_AT_KEY] = occurrences };
         }
+
         private static JsonObject ToJsonObject(this IWeekly weekly)
         {
             var occurrences = weekly
                 .SelectOn(x => (Key: x.DayOfWeek.ToFriendlyString(), Val: x.Then.ToJsonObject()))
                 .Aggregate(new JsonObject(), (json, x) => { json[x.Key] = x.Val; return json; });
+
             return new JsonObject { [WEEKLY_ON_KEY] = occurrences };
         }
+
         private static JsonObject ToJsonObject(this IMonthly monthly)
         {
             var occurrences = monthly
@@ -83,17 +77,24 @@ namespace IncaTechnologies.Recurrence
                     x => (Key: x.DayOfMonth.ToString(), Val: x.Then.ToJsonObject()),
                     x => (Key: $"{x.DayInMonth.ToFriendlyString()}-{x.DayOfWeek.ToFriendlyString()}", Val: x.Then.ToJsonObject()))
                 .Aggregate(new JsonObject(), (json, x) => { json[x.Key] = x.Val; return json; });
+
             return new JsonObject { [MONTHLY_THE_KEY] = occurrences };
         }
+
         private static JsonObject ToJsonObject(this IYearly yearly)
         {
-            var enCulture = CultureInfo.GetCultureInfo("en");
             var monthlyOccurrences = yearly
-                .SelectIn(x => (Key: enCulture.DateTimeFormat.GetMonthName(x.Month), Val: x.Then.ToJsonObject()))
+                .SelectIn(x => (Key: MonthName[x.Month], Val: x.Then.ToJsonObject()))
                 .Aggregate(new JsonObject(), (json, x) => { json[x.Key] = x.Val; return json; });
+
             return new JsonObject { [YEARLY_IN_KEY] = monthlyOccurrences };
         }
-        internal static string ToFriendlyString(this DayInMonth dayInMonth) => Enum.GetName(typeof(DayInMonth), dayInMonth);
-        internal static string ToFriendlyString(this DayOfWeek dayOfWeek) => Enum.GetName(typeof(DayOfWeek), dayOfWeek);
+
+        internal static string ToFriendlyString(this DayInMonth dayInMonth) 
+            => Enum.GetName(typeof(DayInMonth), dayInMonth);
+
+        internal static string ToFriendlyString(this DayOfWeek dayOfWeek) 
+            => Enum.GetName(typeof(DayOfWeek), dayOfWeek);
+
     }
 }

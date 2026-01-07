@@ -5,15 +5,16 @@ namespace Tests;
 public class JsonParserTests
 {
     [Fact]
-    public void Parse_InvalidString_ShouldThrowArgumentException()
+    public void Parse_InvalidString_ShouldThrowJsonException()
     {
         // Arrange
         var invalidJson = "{}";
         // Act
         IRecurrent parse() => JsonParser.Parse(invalidJson);
         // Assert
-        Assert.Throws<ArgumentException>(parse);
+        Assert.Throws<System.Text.Json.JsonException>(parse);
     }
+
     [Fact]
     public void TryParse_InvalidString_ShouldReturnFalse()
     {
@@ -24,6 +25,7 @@ public class JsonParserTests
         // Assert
         Assert.False(result);
     }
+
     [Fact]
     public void TryParse_ValidString_ShouldReturnTrue()
     {

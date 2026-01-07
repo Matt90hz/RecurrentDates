@@ -9,7 +9,9 @@ public static class _Initializers
     public static void Initialize()
     {
         VerifyDiffPlex.Initialize();
-        DiffTools.UseOrder([DiffTool.VisualStudio, DiffTool.VisualStudioCode]);
+
+        DiffTools.UseOrder(DiffTool.VisualStudio, DiffTool.VisualStudioCode);
+
         VerifierSettings.AddExtraSettings(x =>
         {
             x.MaxDepth = 10;
@@ -17,6 +19,7 @@ public static class _Initializers
             x.DefaultValueHandling = Argon.DefaultValueHandling.Include;
             x.ReferenceLoopHandling = Argon.ReferenceLoopHandling.Ignore;
         });
+
         VerifierSettings.DontScrubDateTimes();
         VerifierSettings.DontIgnoreEmptyCollections();
     }

@@ -7,24 +7,28 @@ namespace IncaTechnologies.Recurrence
     /// Base interface for recurrences.
     /// </summary>
     public interface IRecurrent { }
+
     /// <summary>
     /// Represents an yearly recurrence, is top level recurrence.
     /// Can be created using <see cref="Occurs.EveryYear"/>.
     /// The monthly occurrences can be configured using extensions form <see cref="Occurs"/>.
     /// </summary>
     public interface IYearly : IRecurrent { }
+
     /// <summary>
     /// Represents a monthly recurrence.
     /// Can be created using <see cref="Occurs.EveryMonth"/>.
     /// The weekly and daily occurrences can be configured using extensions form <see cref="Occurs"/>.
     /// </summary>
     public interface IMonthly : IRecurrent { }
+
     /// <summary>
     /// Represents a weekly recurrence.
     /// Can be created using <see cref="Occurs.EveryWeek"/>.
     /// The daily occurrences can be configured using extensions form <see cref="Occurs"/>.
     /// </summary>
     public interface IWeekly : IRecurrent { }
+
     /// <summary>
     /// Represents a daily recurrence.
     /// Can be created using <see cref="Occurs.EveryDay"/>.
@@ -32,25 +36,30 @@ namespace IncaTechnologies.Recurrence
     /// The hourly occurrences can be configured using extensions form <see cref="Occurs"/>.
     /// </summary>
     public interface IDaily : IRecurrent { }
+
     /// <summary>
     /// Represents a hourly recurrence.
     /// The minutely occurrence can be configured using extensions form <see cref="Occurs"/>.
     /// </summary>
     public interface IHourly : IRecurrent { }
+
     /// <summary>
     /// Represents a minutely recurrence.
     /// The secondly occurrence can be configured using extensions form <see cref="Occurs"/>.
     /// </summary>
     public interface IMinutely : IRecurrent { }
+
     /// <summary>
     /// Represents a secondly recurrence.
     /// The occurrences cannot be configured any further.
     /// </summary>
     public interface ISecondly : IRecurrent { }
+
     internal sealed class Yearly : IYearly
     {
         public List<Monthly> In { get; } = new List<Monthly>();
     }
+
     internal sealed class Monthly : IMonthly
     {
         public Yearly Yearly { get; set; }
@@ -58,11 +67,13 @@ namespace IncaTechnologies.Recurrence
         public List<Daily> TheDay { get; } = new List<Daily>();
         public List<Daily> InDay { get; } = new List<Daily>();
     }
+
     internal sealed class Weekly : IWeekly
     {
         public Monthly Monthly { get; set; }
         public List<Daily> On { get; } = new List<Daily>();
     }
+
     internal sealed class Daily : IDaily
     {
         public Weekly Weekly { get; set; }
@@ -72,29 +83,56 @@ namespace IncaTechnologies.Recurrence
         public DayOfWeek DayOfWeek { get; set; }
         public List<Hourly> At { get; } = new List<Hourly>();
     }
+
     internal sealed class Hourly : IHourly
     {
         public int Hour { get; set; }
         public Daily Daily { get; set; }
         public Minutely Minutely { get; set; }
     }
+
     internal sealed class Minutely : IMinutely
     {
         public Hourly Hourly { get; set; }
         public int Minute { get; set; }
         public Secondly Secondly { get; set; }
     }
+
     internal sealed class Secondly : ISecondly
     {
         public Minutely Minutely { get; set; }
         public int Second { get; set; }
     }
+
     /// <summary>
     /// Indicates the place in the month of a week day.
     /// The tuple <see cref="DayInMonth"/> and <see cref="DayOfWeek"/> are used to identify the occurrence.
     /// For example (<see cref="DayInMonth.First"/>, <see cref="DayOfWeek.Sunday"/>).
     /// </summary>
-    public enum DayInMonth { First, Second, Third, Fourth, Last }
+    public enum DayInMonth 
+    { 
+        /// <summary>
+        /// First occurrence of the <see cref="DayOfWeek"/> in the month.
+        /// </summary>
+        First,
+        /// <summary>
+        /// Second occurrence of the <see cref="DayOfWeek"/> in the month.
+        /// </summary>
+        Second,
+        /// <summary>
+        /// Third occurrence of the <see cref="DayOfWeek"/> in the month.
+        /// </summary>
+        Third,
+        /// <summary>
+        /// Fourth occurrence of the <see cref="DayOfWeek"/> in the month.
+        /// </summary>
+        Fourth,
+        /// <summary>
+        /// Last occurrence of the <see cref="DayOfWeek"/> in the month.
+        /// </summary>
+        Last
+    }
+
     /// <summary>
     /// Factories and builders for <see cref="IRecurrent"/> and derived.
     /// </summary>
@@ -274,6 +312,7 @@ namespace IncaTechnologies.Recurrence
             return weekly;
         }
         #endregion Yearly
+
         #region Monthly
         /// <summary>
         /// Creates a monthly recurrence.
@@ -755,6 +794,13 @@ namespace IncaTechnologies.Recurrence
         /// <param name="dayOfWeek">The day of the week.</param>
         /// <returns><see cref="IHourly"/> to fluently configure the daily occurrence.</returns>
         public static IHourly Last(this IWeekly recurrence, DayOfWeek dayOfWeek) => recurrence.SetDayInMonth(DayInMonth.Last, dayOfWeek);
+        /// <summary>
+        /// Set a monthly recurrence to occur the specified <paramref name="dayInMonth"/> and <paramref name="dayOfWeek"/> in the month.
+        /// </summary>
+        /// <param name="recurrence">The weekly occurrence of a monthly recurrence to be configured.</param>
+        /// <param name="dayInMonth">The week in the month from first to last.</param>
+        /// <param name="dayOfWeek">The day of the week.</param>
+        /// <returns><see cref="IHourly"/> to fluently configure the daily occurrence.</returns>
         public static IHourly SetDayInMonth(this IWeekly recurrence, DayInMonth dayInMonth, DayOfWeek dayOfWeek)
         {
             var hourly = new Hourly();
@@ -773,6 +819,7 @@ namespace IncaTechnologies.Recurrence
             return hourly;
         }
         #endregion Monthly
+
         #region Weekly
         /// <summary>
         /// Creates a weekly recurrence.
@@ -900,6 +947,7 @@ namespace IncaTechnologies.Recurrence
             return hourly;
         }
         #endregion Weekly
+
         #region Dayly
         /// <summary>
         /// Creates a daily recurrence.
