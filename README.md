@@ -1,7 +1,15 @@
 # Incatechnologies Recurrence
+
 Welcome to the Incatechnologies Recurrence Library, a powerful and flexible solution for handling recurring dates in your .NET projects. Whether you need to manage event schedules, automate reminders, or create complex recurrence patterns, this library has you covered.
+
+## Latest
+
+1.0.2 - Added a practical implementation of `JsonConverter` to use in your projects.
+
 ## Create a recurrence
+
 The available recurrences are daily, weekly, monthly, and yearly. All the recurrence builders are part of the `Occurs` class, along with helper functions that allow you to build recurrences fluently.
+
 ### Examples
 ```CSharp
 // Every day at midnight.
