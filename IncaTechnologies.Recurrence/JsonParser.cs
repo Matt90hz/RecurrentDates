@@ -59,6 +59,8 @@ namespace IncaTechnologies.Recurrence
             
             while (reader.Read())
             {
+                if (reader.TokenType is JsonTokenType.EndObject) break;
+
                 if (reader.TokenType is JsonTokenType.PropertyName && reader.GetString() is string name)
                 {
                     if (name is YEARLY_KEY)
@@ -79,7 +81,7 @@ namespace IncaTechnologies.Recurrence
                     }
                     else
                     {
-                        throw new JsonException("Unexpected opening property to parse IRecurrent.");
+                        throw new JsonException($"Unexpected opening property to parse IRecurrent. Found: {name}.");
                     }
                 }
             }

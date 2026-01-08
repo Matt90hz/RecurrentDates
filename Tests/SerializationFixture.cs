@@ -16,17 +16,14 @@ public class SerializationFixture
         MonthlyJson = Monthly.ToJson();
         YearlyJson = Yearly.ToJson();
 
-        static JsonSerializerOptions DefaultJsonSerializerOptions() => new()
-        {
-            WriteIndented = true,
-        };
-
-        JsonSerializerOptions = DefaultJsonSerializerOptions();
-        JsonSerializerOptionsWithConverter = DefaultJsonSerializerOptions();
+        JsonSerializerOptionsWithConverter = new JsonSerializerOptions(JsonSerializerOptions);
         JsonSerializerOptionsWithConverter.Converters.Add(new RecurrenceJsonConverter());
     }
 
-    public JsonSerializerOptions JsonSerializerOptions { get; }
+    public JsonSerializerOptions JsonSerializerOptions { get; } = new()
+    {
+        WriteIndented = true,
+    };
 
     public JsonSerializerOptions JsonSerializerOptionsWithConverter { get; }
 

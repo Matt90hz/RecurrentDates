@@ -4,7 +4,7 @@ Welcome to the Incatechnologies Recurrence Library, a powerful and flexible solu
 
 ## Latest
 
-1.0.2 - Added a practical implementation of `JsonConverter` to use in your projects.
+1.0.3 - Added a practical implementation of `JsonConverter` to use in your projects.
 
 ## Create a recurrence
 
