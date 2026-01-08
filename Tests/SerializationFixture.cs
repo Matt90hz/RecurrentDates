@@ -1,4 +1,5 @@
 ﻿using IncaTechnologies.Recurrence;
+using System.Text;
 using System.Text.Json;
 using Tests;
 
@@ -8,10 +9,26 @@ namespace Tests;
 
 public class SerializationFixture
 {
-    public JsonSerializerOptions JsonSerializerOptions { get; } = new()
+    public SerializationFixture()
     {
-        WriteIndented = true,
-    };
+        DailyJson = Daily.ToJson();
+        WeeklyJson = Weekly.ToJson();
+        MonthlyJson = Monthly.ToJson();
+        YearlyJson = Yearly.ToJson();
+
+        static JsonSerializerOptions DefaultJsonSerializerOptions() => new()
+        {
+            WriteIndented = true,
+        };
+
+        JsonSerializerOptions = DefaultJsonSerializerOptions();
+        JsonSerializerOptionsWithConverter = DefaultJsonSerializerOptions();
+        JsonSerializerOptionsWithConverter.Converters.Add(new RecurrenceJsonConverter());
+    }
+
+    public JsonSerializerOptions JsonSerializerOptions { get; }
+
+    public JsonSerializerOptions JsonSerializerOptionsWithConverter { get; }
 
     public IRecurrent Daily { get; } = Occurs.EveryDay().At(x =>
     {
@@ -85,4 +102,20 @@ public class SerializationFixture
         x.November().Day(15);
         x.December().FourthMonday().Hour(9).Minute(15).Second(30);
     });
+
+    public string DailyJson { get; }
+
+    public string WeeklyJson {get;}
+
+    public string MonthlyJson {get;}
+
+    public string YearlyJson { get; }
+
+    public Utf8JsonReader DailyJsonStream() => new(Encoding.UTF8.GetBytes(DailyJson));
+
+    public Utf8JsonReader WeeklyJsonStream() => new(Encoding.UTF8.GetBytes(WeeklyJson));
+
+    public Utf8JsonReader MonthlyJsonStream() => new(Encoding.UTF8.GetBytes(MonthlyJson));
+
+    public Utf8JsonReader YearlyJsonStream() => new(Encoding.UTF8.GetBytes(YearlyJson));
 }

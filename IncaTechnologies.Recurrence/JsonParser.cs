@@ -56,7 +56,7 @@ namespace IncaTechnologies.Recurrence
         public static IRecurrent Parse(ref Utf8JsonReader reader)
         {
             IRecurrent recurrent = null;
-
+            
             while (reader.Read())
             {
                 if (reader.TokenType is JsonTokenType.PropertyName && reader.GetString() is string name)

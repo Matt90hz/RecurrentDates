@@ -22,5 +22,6 @@ public static class _Initializers
 
         VerifierSettings.DontScrubDateTimes();
         VerifierSettings.DontIgnoreEmptyCollections();
+        VerifierSettings.DisableRequireUniquePrefix();
     }
 }
