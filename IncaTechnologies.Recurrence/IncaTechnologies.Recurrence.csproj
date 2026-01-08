@@ -10,11 +10,12 @@
 		<PackageTags>recurrent;recurrence;dates;occurrences;events;</PackageTags>
 		<PackageOutputPath>.nupkg</PackageOutputPath>
 		<PackageReleaseNotes>1.0.0 - Realease
-1.0.1 - Include documentation</PackageReleaseNotes>
+1.0.1 - Include documentation
+1.0.2 - Add JsonConverter</PackageReleaseNotes>
 		<Description>Simple library to deal with recurrent events in a fluents style.
 It supports reccurences from every day to every year and implements enumerating, serializing and parsing.</Description>
 		<Title>Incatechnologies Recurrence</Title>
-		<VersionPrefix>1.0.1</VersionPrefix>
+		<VersionPrefix>1.0.2</VersionPrefix>
 		<PackageProjectUrl>https://github.com/Matt90hz/RecurrentDates/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Matt90hz/RecurrentDates.git</RepositoryUrl>
 		<Authors>Incatechnologies</Authors>
@@ -31,7 +32,7 @@ It supports reccurences from every day to every year and implements enumerating,
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="System.Text.Json" Version="9.0.3" />
+		<PackageReference Include="System.Text.Json" Version="10.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
