@@ -11,11 +11,11 @@
 		<PackageOutputPath>.nupkg</PackageOutputPath>
 		<PackageReleaseNotes>1.0.0 - Realease
 1.0.1 - Include documentation
-1.0.3 - Add JsonConverter</PackageReleaseNotes>
+1.0.4 - Add JsonConverter</PackageReleaseNotes>
 		<Description>Simple library to deal with recurrent events in a fluents style.
 It supports reccurences from every day to every year and implements enumerating, serializing and parsing.</Description>
 		<Title>Incatechnologies Recurrence</Title>
-		<VersionPrefix>1.0.3</VersionPrefix>
+		<VersionPrefix>1.0.4</VersionPrefix>
 		<PackageProjectUrl>https://github.com/Matt90hz/RecurrentDates/</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/Matt90hz/RecurrentDates.git</RepositoryUrl>
 		<Authors>Incatechnologies</Authors>
