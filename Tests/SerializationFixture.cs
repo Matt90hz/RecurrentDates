@@ -107,12 +107,4 @@ public class SerializationFixture
     public string MonthlyJson {get;}
 
     public string YearlyJson { get; }
-
-    public Utf8JsonReader DailyJsonStream() => new(Encoding.UTF8.GetBytes(DailyJson));
-
-    public Utf8JsonReader WeeklyJsonStream() => new(Encoding.UTF8.GetBytes(WeeklyJson));
-
-    public Utf8JsonReader MonthlyJsonStream() => new(Encoding.UTF8.GetBytes(MonthlyJson));
-
-    public Utf8JsonReader YearlyJsonStream() => new(Encoding.UTF8.GetBytes(YearlyJson));
 }

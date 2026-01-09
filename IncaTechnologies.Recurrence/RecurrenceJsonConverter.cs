@@ -18,7 +18,7 @@ namespace IncaTechnologies.Recurrence
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, IRecurrent value, JsonSerializerOptions options)
         {
-            value.ToJsonObject().WriteTo(writer, options);
+            value.WriteTo(writer);
         }
     }
 }

@@ -20,12 +20,13 @@ namespace IncaTechnologies.Recurrence
         /// </summary>
         /// <param name="recurrence">Json string.</param>
         /// <param name="result">The resulting recurrence or null in case of failure.</param>
+        /// <param name="options">Reader options. Only <see cref="JsonSerializerOptions.AllowTrailingCommas"/> and <see cref="JsonSerializerOptions.MaxDepth"/> are considered.</param>
         /// <returns>True, if the parsing is successful. False, if an exception is thrown during the parsing.</returns>
-        public static bool TryParse(string recurrence, out IRecurrent result)
+        public static bool TryParse(string recurrence, out IRecurrent result, JsonSerializerOptions options = null)
         {
             try
             {
-                result = Parse(recurrence);
+                result = Parse(recurrence, options);
                 return true;
             }
             catch (JsonException)
@@ -39,11 +40,15 @@ namespace IncaTechnologies.Recurrence
         /// Parse a Json string into a recurrent object.
         /// </summary>
         /// <param name="recurrence">Json string.</param>
+        /// <param name="options">Reader options. Only <see cref="JsonSerializerOptions.AllowTrailingCommas"/> and <see cref="JsonSerializerOptions.MaxDepth"/> are considered.</param>
         /// <returns><see cref="IRecurrent"/> representation of the recurrence.</returns>
         /// <exception cref="JsonException">The Json must contain valid recurrence keys.</exception>
-        public static IRecurrent Parse(string recurrence)
+        public static IRecurrent Parse(string recurrence, JsonSerializerOptions options = null)
         {
-            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(recurrence));
+            options = options ?? JsonSerializerOptions.Web;
+
+            var reader = new Utf8JsonReader(Encoding.UTF8.GetBytes(recurrence), options.ToJsonReaderOptions());
+
             return Parse(ref reader);
         }
 
@@ -204,5 +209,13 @@ namespace IncaTechnologies.Recurrence
 
             return daily;
         }
+
+        internal static JsonReaderOptions ToJsonReaderOptions(this JsonSerializerOptions options) => new JsonReaderOptions
+        {
+            AllowMultipleValues = false,
+            AllowTrailingCommas = options.AllowTrailingCommas,
+            CommentHandling = JsonCommentHandling.Skip,
+            MaxDepth = options.MaxDepth,
+        };
     }
 }

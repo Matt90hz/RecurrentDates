@@ -1,4 +1,7 @@
 ﻿using IncaTechnologies.Recurrence;
+using System.Text;
+using System.Text.Json;
+
 
 namespace Tests;
 
@@ -20,7 +23,9 @@ public class VerifyJsonParser(SerializationFixture fixture)
     [Fact]
     public Task DailyFromStream()
     {
-        var stream = fixture.DailyJsonStream();
+        Utf8JsonReader stream = new(
+            Encoding.UTF8.GetBytes(fixture.DailyJson),
+            fixture.JsonSerializerOptions.ToJsonReaderOptions());
 
         return Verify(JsonParser.Parse(ref stream)).UseMethodName(nameof(VerifyJsonParser.Daily));
     }
@@ -28,7 +33,9 @@ public class VerifyJsonParser(SerializationFixture fixture)
     [Fact]
     public Task WeeklyFromStream()
     {
-        var stream = fixture.WeeklyJsonStream();
+        Utf8JsonReader stream =new(
+            Encoding.UTF8.GetBytes(fixture.WeeklyJson),
+            fixture.JsonSerializerOptions.ToJsonReaderOptions());
 
         return Verify(JsonParser.Parse(ref stream)).UseMethodName(nameof(VerifyJsonParser.Weekly));
     }
@@ -36,7 +43,9 @@ public class VerifyJsonParser(SerializationFixture fixture)
     [Fact]
     public Task MonthlyFromStream()
     {
-        var stream = fixture.MonthlyJsonStream();
+        Utf8JsonReader stream =new(
+            Encoding.UTF8.GetBytes(fixture.MonthlyJson),
+            fixture.JsonSerializerOptions.ToJsonReaderOptions());
 
         return Verify(JsonParser.Parse(ref stream)).UseMethodName(nameof(VerifyJsonParser.Monthly));
     }
@@ -44,7 +53,9 @@ public class VerifyJsonParser(SerializationFixture fixture)
     [Fact]
     public Task YearlyFromStream()
     {
-        var stream = fixture.YearlyJsonStream();
+        Utf8JsonReader stream =new(
+            Encoding.UTF8.GetBytes(fixture.YearlyJson),
+            fixture.JsonSerializerOptions.ToJsonReaderOptions());
 
         return Verify(JsonParser.Parse(ref stream)).UseMethodName(nameof(VerifyJsonParser.Yearly));
     }
