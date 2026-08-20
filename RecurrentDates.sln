@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmarks", "Benchmarks\Be
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IncaTechnologies.Recurrence.Radzen", "IncaTechnologies.Recurrence.Radzen\IncaTechnologies.Recurrence.Radzen.csproj", "{B9AC2160-2192-40DC-BC73-2AB8D9C41F1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.Blazor", "Example.Blazor\Example.Blazor.csproj", "{2D45867A-C236-4FD4-9276-7CE4515DD4E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B9AC2160-2192-40DC-BC73-2AB8D9C41F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9AC2160-2192-40DC-BC73-2AB8D9C41F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9AC2160-2192-40DC-BC73-2AB8D9C41F1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D45867A-C236-4FD4-9276-7CE4515DD4E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D45867A-C236-4FD4-9276-7CE4515DD4E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D45867A-C236-4FD4-9276-7CE4515DD4E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D45867A-C236-4FD4-9276-7CE4515DD4E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
