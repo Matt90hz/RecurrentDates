@@ -30,7 +30,7 @@
         public IDaily? Daily { get; set; }
     }
 
-    private IEnumerable<DayViewModel> _days = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayViewModel(x))];
+    private readonly IEnumerable<DayViewModel> _days = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayViewModel(x))];
     private IEnumerable<DayViewModel> _selectedDays = [];
 
     [Parameter]

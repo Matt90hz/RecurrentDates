@@ -25,7 +25,7 @@
         public TimeOnly? Time { get; set; }
     }
 
-    private List<TimeViewModel> _times = [new TimeViewModel()];
+    private readonly List<TimeViewModel> _times = [new TimeViewModel()];
 
     [Parameter]
     public IDaily DailyRecurrence { get; set; } = null!;

@@ -1,0 +1,182 @@
+<RadzenStack>
+    <RadzenStack Orientation="Orientation.Horizontal">
+        <RadzenButton Text="Aggiungi giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiGiornoClick" />
+        <RadzenButton Text="Aggiungi settimana" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiSettimanaClick" />
+    </RadzenStack>
+
+    @foreach (var (i, vm) in _viewModels.Index())
+    {
+        <RadzenFieldset Text=@vm.Title AllowCollapse="true">
+            <RadzenStack>
+                @if (vm is DayOfMonthViewModel dayOfMonth)
+                {
+                    <RadzenFormField Text="Giorno del mese">
+                        <ChildContent>
+                            <RadzenNumeric Name=@($"nuGiornoNelMese{i}")
+                                           @bind-Value=dayOfMonth.DayOfMonth
+                                           TValue="int?"
+                                           Min="1"
+                                           Max="31"
+                                           Step="1"
+                                           Change=OnRecurrenceChanged />
+                        </ChildContent>
+                        <Helper>
+                            <RadzenRequiredValidator Component=@($"nuGiornoNelMese{i}") />
+                        </Helper>
+                    </RadzenFormField>
+                }
+                else if (vm is WeekOfMonthViewModel weekOfMonth)
+                {
+                    <RadzenRow>
+                        <RadzenColumn>
+                            <RadzenFormField class="rz-w-100" Text="Settimana">
+                                <ChildContent>
+                                    <RadzenDropDown Name=@($"ddSettimanaNelMese{i}")
+                                                    @bind-Value=weekOfMonth.WeekOfMonth
+                                                    Data=_weeksOfMonth
+                                                    Change=OnRecurrenceChanged />
+                                </ChildContent>
+                                <Helper>
+                                    <RadzenRequiredValidator Component=@($"ddSettimanaNelMese{i}") />
+                                </Helper>
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn>
+                            <RadzenFormField class="rz-w-100" Text="Giorno della settimana">
+                                <ChildContent>
+                                    <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}")
+                                                    @bind-Value=weekOfMonth.DayOfWeek
+                                                    Data=_daysOfWeek
+                                                    Change=OnRecurrenceChanged />
+                                </ChildContent>
+                                <Helper>
+                                    <RadzenRequiredValidator Component=@($"ddGiornoDellaSettimana{i}") />
+                                </Helper>
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>                 
+                }
+
+                <DailyRecurrencePicker @key=vm @bind-DailyRecurrence=vm.DailyRecurrence Change=OnRecurrenceChanged />
+
+                <RadzenButton Text="Rimuovi"
+                              Size="ButtonSize.ExtraSmall"
+                              Variant="Variant.Text"
+                              Click=@(() => OnRimuoviClick(vm)) />
+            </RadzenStack>
+        </RadzenFieldset>
+    }
+</RadzenStack>
+
+@using IncaTechnologies.Recurrence
+    @code {
+
+    private abstract class MonthlyViewModel
+    {
+        public IDaily? DailyRecurrence { get; set; }
+        public abstract string Title { get; }
+    }
+
+    private sealed class DayOfMonthViewModel : MonthlyViewModel
+    {
+        public override string Title { get; } = "Giorno del mese";
+        public int? DayOfMonth { get; set; } = 1;
+    }
+
+    private sealed class WeekOfMonthViewModel : MonthlyViewModel
+    {
+        public override string Title { get; } = "Settimana del mese";
+        public string? WeekOfMonth { get; set; } = _weeksOfMonth[0];
+        public string? DayOfWeek { get; set; } = _daysOfWeek[0];
+
+    }
+
+    private static readonly string[] _weeksOfMonth = FormatterRecurrent.SettimaneNelMese;
+    private static readonly string[] _daysOfWeek = FormatterRecurrent.GiorniDellaSettimana;
+    private readonly List<MonthlyViewModel> _viewModels = [];
+
+    [Parameter]
+    public IMonthly MonthlyRecurrence { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<IMonthly> MonthlyRecurrenceChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<IMonthly> Change { get; set; }
+
+    private async Task OnAggiungiGiornoClick()
+    {
+        _viewModels.Add(new DayOfMonthViewModel());
+        await OnRecurrenceChanged();
+    }
+
+    private async Task OnAggiungiSettimanaClick()
+    {
+        _viewModels.Add(new WeekOfMonthViewModel());
+        await OnRecurrenceChanged();
+    }
+
+    private async Task OnRimuoviClick(MonthlyViewModel definition)
+    {
+        if (_viewModels.Count is 1) return;
+
+        _viewModels.Remove(definition);
+        await OnRecurrenceChanged();
+    }
+
+    private async Task OnRecurrenceChanged()
+    {
+        MonthlyRecurrence = GenerateRecurrence(_viewModels);
+
+        await MonthlyRecurrenceChanged.InvokeAsync(MonthlyRecurrence);
+        await Change.InvokeAsync(MonthlyRecurrence);
+    }
+
+    private static IMonthly GenerateRecurrence(IEnumerable<MonthlyViewModel> viewModels)
+    {
+        var monthly = Occurs.EveryMonth().The(the =>
+        {
+            foreach (var vm in viewModels)
+            {
+                var hourly = vm switch
+                {
+                    DayOfMonthViewModel { DayOfMonth: int d } => the.Day(d),
+                    WeekOfMonthViewModel { WeekOfMonth: string w, DayOfWeek: string d } => the.SetDayInMonth(ParseDayInMonth(w), ParseDayOfWeek(d)),
+                    _ => throw new Exception()
+                };
+
+                hourly.At(at =>
+                {
+                    vm.DailyRecurrence?.ForEachAt(x =>
+                    {
+                        at.Hour(x.Hour).Minute(x.Minute).Second(x.Second);
+                    });
+                });
+            }
+        });
+
+        return (IMonthly)monthly.GetRoot();
+    }
+
+    private static DayInMonth ParseDayInMonth(string x) => x switch
+    {
+        "Prima" => DayInMonth.First,
+        "Seconda" => DayInMonth.Second,
+        "Terza" => DayInMonth.Third,
+        "Quarta" => DayInMonth.Fourth,
+        "Ultima" => DayInMonth.Last,
+        _ => throw new ArgumentException($"Impossible to parse day in month '{x}'.", nameof(x))
+    };
+
+    private static DayOfWeek ParseDayOfWeek(string x) => x switch
+    {
+        "Lunedì" => DayOfWeek.Monday,
+        "Martedì" => DayOfWeek.Tuesday,
+        "Mercoledì" => DayOfWeek.Wednesday,
+        "Giovedì" => DayOfWeek.Thursday,
+        "Venerdì" => DayOfWeek.Friday,
+        "Sabato" => DayOfWeek.Saturday,
+        "Domenica" => DayOfWeek.Sunday,
+        _ => throw new ArgumentException($"Impossible to parse day of week '{x}'.", nameof(x))
+    };
+}
