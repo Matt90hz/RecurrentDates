@@ -1,26 +1,24 @@
-<RadzenFieldset Text="Alle" AllowCollapse="true">
-    <RadzenStack>
-        <RadzenStack Orientation=Orientation.Horizontal>
-            <RadzenButton class="rz-align-left" Text="Aggiungi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
-        </RadzenStack>
-        @foreach (var (i, x) in _times.Index())
-        {
-            <div style="display: flex; gap: 1rem">
-                <RadzenFormField Style="flex-grow: 1" Text="Ore">
-                    <ChildContent>
-                        <RadzenDatePicker Name=@(i + "dpTime") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
-                    </ChildContent>
-                    <Helper>
-                        <RadzenRequiredValidator Component=@(i + "dpTime") />
-                    </Helper>
-                </RadzenFormField>
-                <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@(_times.Count is 1) Click=@(() => OnRimuoviClick(x)) />
-            </div>
-        }
+<RadzenStack>
+    <RadzenStack Orientation=Orientation.Horizontal>
+        <RadzenButton class="rz-align-left" Text="Aggiungi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
     </RadzenStack>
-</RadzenFieldset>
+    @foreach (var (i, x) in _times.Index())
+    {
+        <div style="display: flex; gap: 1rem">
+            <RadzenFormField Style="flex-grow: 1" Text="Ore">
+                <ChildContent>
+                    <RadzenDatePicker Name=@(i + "dpTime") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component=@(i + "dpTime") />
+                </Helper>
+            </RadzenFormField>
+            <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@(_times.Count is 1) Click=@(() => OnRimuoviClick(x)) />
+        </div>
+    }
+</RadzenStack>
 
-@code {
+    @code {
 
     private sealed class TimeViewModel
     {
@@ -35,31 +33,39 @@
     [Parameter]
     public EventCallback<IDaily> DailyRecurrenceChanged { get; set; }
 
+    [Parameter]
+    public EventCallback<IDaily> Change { get; set; }
+
 
     private void OnAggiungiClick()
     {
         _times.Add(new());
     }
 
-    private Task OnDatePickerChange()
+    private async Task OnDatePickerChange()
     {
-        return DailyRecurrenceChanged.InvokeAsync(ToRecurrence(_times));
+        DailyRecurrence = GenerateRecurrence(_times);
+
+        await DailyRecurrenceChanged.InvokeAsync(DailyRecurrence);
+        await Change.InvokeAsync(DailyRecurrence);
     }
 
-    private Task OnRimuoviClick(TimeViewModel viewModel)
+    private async Task OnRimuoviClick(TimeViewModel viewModel)
     {
-        if (_times.Count is 1) return Task.CompletedTask;
-        
+        if (_times.Count is 1) return;
+
         _times.Remove(viewModel);
+        DailyRecurrence = GenerateRecurrence(_times);
 
-        return DailyRecurrenceChanged.InvokeAsync(ToRecurrence(_times));
+        await DailyRecurrenceChanged.InvokeAsync(DailyRecurrence);
+        await Change.InvokeAsync(DailyRecurrence);
     }
 
-    private IDaily ToRecurrence(IEnumerable<TimeViewModel> viewModels)
+    private static IDaily GenerateRecurrence(IEnumerable<TimeViewModel> viewModels)
     {
         var daily = Occurs.EveryDay().At(x =>
         {
-            foreach (var vm in _times)
+            foreach (var vm in viewModels)
             {
                 if (vm.Time is not { Hour: int h, Minute: int m, Second: int s }) continue;
 
