@@ -1,0 +1,72 @@
+<RadzenFieldset Text="Alle" AllowCollapse="true">
+    <RadzenStack>
+        <RadzenStack Orientation=Orientation.Horizontal>
+            <RadzenButton class="rz-align-left" Text="Aggiungi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
+        </RadzenStack>
+        @foreach (var (i, x) in _times.Index())
+        {
+            <div style="display: flex; gap: 1rem">
+                <RadzenFormField Style="flex-grow: 1" Text="Ore">
+                    <ChildContent>
+                        <RadzenDatePicker Name=@(i + "dpTime") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
+                    </ChildContent>
+                    <Helper>
+                        <RadzenRequiredValidator Component=@(i + "dpTime") />
+                    </Helper>
+                </RadzenFormField>
+                <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@(_times.Count is 1) Click=@(() => OnRimuoviClick(x)) />
+            </div>
+        }
+    </RadzenStack>
+</RadzenFieldset>
+
+@code {
+
+    private sealed class TimeViewModel
+    {
+        public TimeOnly? Time { get; set; }
+    }
+
+    private List<TimeViewModel> _times = [new TimeViewModel()];
+
+    [Parameter]
+    public IDaily DailyRecurrence { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<IDaily> DailyRecurrenceChanged { get; set; }
+
+
+    private void OnAggiungiClick()
+    {
+        _times.Add(new());
+    }
+
+    private Task OnDatePickerChange()
+    {
+        return DailyRecurrenceChanged.InvokeAsync(ToRecurrence(_times));
+    }
+
+    private Task OnRimuoviClick(TimeViewModel viewModel)
+    {
+        if (_times.Count is 1) return Task.CompletedTask;
+        
+        _times.Remove(viewModel);
+
+        return DailyRecurrenceChanged.InvokeAsync(ToRecurrence(_times));
+    }
+
+    private IDaily ToRecurrence(IEnumerable<TimeViewModel> viewModels)
+    {
+        var daily = Occurs.EveryDay().At(x =>
+        {
+            foreach (var vm in _times)
+            {
+                if (vm.Time is not { Hour: int h, Minute: int m, Second: int s }) continue;
+
+                x.Hour(h).Minute(m).Second(s);
+            }
+        });
+
+        return (IDaily)daily.GetRoot();
+    }
+}

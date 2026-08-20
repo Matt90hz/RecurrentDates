@@ -84,16 +84,9 @@
         </RadzenFormField>
     }
     @* Scelta dell'orario *@
-    @if (_ogni is not null)
+    @if (_ogni is "Giorno")
     {
-        <RadzenFormField Text="Ore">
-            <ChildContent>
-                <RadzenDatePicker Name="dpOrario" @bind-Value=_orario TimeOnly=true Change=OnOrarioChanged />
-            </ChildContent>
-            <Helper>
-                <RadzenRequiredValidator Component="dpOrario" />
-            </Helper>
-        </RadzenFormField>
+        <DailyRecurrencePicker />
     }
 </RadzenStack>
 
