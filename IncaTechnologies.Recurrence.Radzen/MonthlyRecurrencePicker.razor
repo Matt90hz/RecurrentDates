@@ -118,8 +118,6 @@
 
     private async Task OnRimuoviClick(MonthlyViewModel definition)
     {
-        if (_viewModels.Count is 1) return;
-
         _viewModels.Remove(definition);
         await OnRecurrenceChanged();
     }

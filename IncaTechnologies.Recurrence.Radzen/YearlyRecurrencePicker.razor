@@ -1,0 +1,91 @@
+<RadzenStack>
+    <RadzenFormField Text="Mesi">
+        <ChildContent>
+            <RadzenDropDown Name="ddMesi"
+                            @bind-Value=_selectedMonths
+                            TextProperty="Text"
+                            Data=_months
+                            Multiple="true"
+                            Change=OnRecurrenceChanged />
+        </ChildContent>
+        <Helper>
+            <RadzenRequiredValidator Component="ddMesi" />
+        </Helper>
+    </RadzenFormField>
+</RadzenStack>
+
+@foreach (var month in _selectedMonths)
+{
+    <RadzenFieldset Text=@month.Text>
+        <MonthlyRecurrencePicker @bind-MonthlyRecurrence=month.MonthlyRecurrence Change=OnRecurrenceChanged />
+    </RadzenFieldset>
+}
+
+@using IncaTechnologies.Recurrence
+@code {
+    private sealed class MonthViewModel(int month, string text)
+    {
+        public string Text { get; } = text;
+        public int Month { get; } = month;
+        public IMonthly? MonthlyRecurrence { get; set; }
+    }
+
+    private static readonly IEnumerable<MonthViewModel> _months = [.. FormatterRecurrent.Mesi.Select((x, i) => new MonthViewModel(i + 1, x))];
+    private IEnumerable<MonthViewModel> _selectedMonths = [];
+
+    [Parameter]
+    public IYearly YearlyRecurrence { get; set; } = null!;
+
+    [Parameter]
+    public EventCallback<IYearly> YearlyRecurrenceChanged { get; set; }
+
+    [Parameter]
+    public EventCallback<IYearly> Change { get; set; }
+
+    private async Task OnRecurrenceChanged()
+    {
+        YearlyRecurrence = GenerateRecurrence(_selectedMonths);
+
+        await YearlyRecurrenceChanged.InvokeAsync(YearlyRecurrence);
+        await Change.InvokeAsync(YearlyRecurrence);
+    }
+
+    private static IYearly GenerateRecurrence(IEnumerable<MonthViewModel> viewModels)
+    {
+        var yearly = Occurs.EveryYear().In(@in =>
+        {
+            foreach (var vm in viewModels)
+            {
+                Month(@in, vm.Month).The(the =>
+                {
+                    vm.MonthlyRecurrence.ForEachTheDay(x => the
+                        .Day(x.DayOfMonth)
+                        .At(at => x.Then.ForEachAt(x => at.Hour(x.Hour).Minute(x.Minute).Second(x.Second))));
+
+                    vm.MonthlyRecurrence.ForEachTheWeekDay(x => the
+                        .SetDayInMonth(x.DayInMonth, x.DayOfWeek)
+                        .At(at => x.Then.ForEachAt(x => at.Hour(x.Hour).Minute(x.Minute).Second(x.Second))));
+                });
+            }
+        });
+
+        return (IYearly)yearly.GetRoot();
+    }
+
+    private static IWeekly Month(IMonthly monthly, int month) => month switch
+    {
+        1 => monthly.January(),
+        2 => monthly.February(),
+        3 => monthly.March(),
+        4 => monthly.April(),
+        5 => monthly.May(),
+        6 => monthly.June(),
+        7 => monthly.July(),
+        8 => monthly.August(),
+        9 => monthly.September(),
+        10 => monthly.October(),
+        11 => monthly.November(),
+        12 => monthly.December(),
+        _ => throw new ArgumentOutOfRangeException(nameof(month), month, "The month must be between 1 and 12.")
+    };
+}
