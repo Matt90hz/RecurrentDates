@@ -21,6 +21,7 @@ It supports reccurences from every day to every year and implements enumerating,
 		<Authors>Incatechnologies</Authors>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<EnableNETAnalyzers>True</EnableNETAnalyzers>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
