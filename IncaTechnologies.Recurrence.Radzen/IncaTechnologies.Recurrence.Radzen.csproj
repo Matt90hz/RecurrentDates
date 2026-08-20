@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="IncaTechnologies.Recurrence" Version="1.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="10.0.11" />
     <PackageReference Include="Radzen.Blazor" Version="11.2.6" />
   </ItemGroup>
