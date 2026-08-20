@@ -1,92 +1,28 @@
 ﻿<RadzenStack>
-    @* Scelta del tipo di ricorrenza *@
     <RadzenFormField Text="Ogni">
         <ChildContent>
-            <RadzenDropDown Name="ddOgni" @bind-Value=_ogni Data=_ogniOpzioni Change=OnOgniChanged />
+            <RadzenDropDown Name="ddOgni" @bind-Value=_ogni Data=_ogniOpzioni/>
         </ChildContent>
         <Helper>
             <RadzenRequiredValidator Component="ddOgni" />
         </Helper>
     </RadzenFormField>
-    @* Scelta del mese *@
-    @if (_ogni is "Anno")
-    {
-        <RadzenFormField Text="Mese">
-            <ChildContent>
-                <RadzenDropDown Name="ddMese" @bind-Value=_mese Data=_mesi Change=OnMeseChanged />
-            </ChildContent>
-            <Helper>
-                <RadzenRequiredValidator Component="ddMese" />
-            </Helper>
-        </RadzenFormField>
-    }
-    @* Scelta del periodo nel mese*@
-    @if (_ogni is "Mese" or "Anno")
-    {
-        <RadzenRadioButtonList @bind-Value=_tipoRicorrenzaMensile Orientation="Orientation.Horizontal" TValue="int" Change=OnTipoRicorrenzaMensileChanged>
-            <Items>
-                @* Numero del mese *@
-                <RadzenRadioButtonListItem Value="0">
-                    <Template>
-                        <RadzenFormField Text="Numero">
-                            <ChildContent>
-                                <RadzenNumeric Name="nuGiornoNelMese" @bind-Value=_giornoNelMese TValue="int?" Min=1 Max=@MaxGiornoNelMese() Step=1 Disabled=@(_tipoRicorrenzaMensile is 1) Change=OnGiornoNelMeseChanged />
-                            </ChildContent>
-                            <Helper>
-                                @if (_tipoRicorrenzaMensile is 0)
-                                {
-                                    <RadzenRequiredValidator Component="nuGiornoNelMese" />
-                                }
-                            </Helper>
-                        </RadzenFormField>
-                    </Template>
-                </RadzenRadioButtonListItem>
-                @* Giorno della settimana nel mese *@
-                <RadzenRadioButtonListItem Value="1">
-                    <Template>
-                        <RadzenFormField Text="Settimana">
-                            <ChildContent>
-                                <RadzenDropDown Name="ddSettimanaNelMese" @bind-Value=_settimanaNelMese Data=_settimaneNelMese Disabled=@(_tipoRicorrenzaMensile is 0) Change=OnSettimanaNelMeseChanged />
-                            </ChildContent>
-                            <Helper>
-                                @if (_tipoRicorrenzaMensile is 1)
-                                {
-                                    <RadzenRequiredValidator Component="ddSettimanaNelMese" />
-                                }
-                            </Helper>
-                        </RadzenFormField>
-                        <RadzenFormField Text="Giorno">
-                            <ChildContent>
-                                <RadzenDropDown Name="ddGiornoDellaSettimanaNelMese" @bind-Value=_giornoDellaSettimana Data=_giorniDellaSettimana Disabled=@(_tipoRicorrenzaMensile is 0) Change=OnGiornoDellaSettimanaChanged />
-                            </ChildContent>
-                            <Helper>
-                                @if (_tipoRicorrenzaMensile is 1)
-                                {
-                                    <RadzenRequiredValidator Component="ddGiornoDellaSettimanaNelMese" />
-                                }
-                            </Helper>
-                        </RadzenFormField>
-                    </Template>
-                </RadzenRadioButtonListItem>
-            </Items>
-        </RadzenRadioButtonList>
-    }
-    @* Scelta del giorno della settimana *@
-    @if (_ogni is "Settimana")
-    {
-        <RadzenFormField Text="Giorno">
-            <ChildContent>
-                <RadzenDropDown Name="ddGionoDellaSettimana" @bind-Value=_giornoDellaSettimana Data=_giorniDellaSettimana Change=OnGiornoDellaSettimanaChanged />
-            </ChildContent>
-            <Helper>
-                <RadzenRequiredValidator Component="ddGionoDellaSettimana" />
-            </Helper>
-        </RadzenFormField>
-    }
-    @* Scelta dell'orario *@
+
     @if (_ogni is "Giorno")
     {
-        <DailyRecurrencePicker />
+        <DailyRecurrencePicker Change=OnRecurrenceChanged />
+    }
+    else if (_ogni is "Settimana")
+    {
+        <WeeklyRecurrencePicker Change=OnRecurrenceChanged />
+    }
+    else if (_ogni is "Mese")
+    {
+        <MonthlyRecurrencePicker Change=OnRecurrenceChanged />
+    }
+    else if (_ogni is "Anno")
+    {
+        <YearlyRecurrencePicker Change=OnRecurrenceChanged />
     }
 </RadzenStack>
 
@@ -95,260 +31,19 @@
 
     [Parameter]
     public IRecurrent? Recurrent { get; set; }
+
     [Parameter]
     public EventCallback<IRecurrent?> RecurrentChanged { get; set; }
 
-    static readonly string[] _ogniOpzioni = ["Giorno", "Settimana", "Mese", "Anno"];
-    static readonly string[] _mesi = FormatterRecurrent.Mesi;
-    static int[] _giorniNelMese = [.. ElencoGiorniNelMese("Gennaio")];
-    static readonly string[] _settimaneNelMese = FormatterRecurrent.SettimaneNelMese;
-    static readonly string[] _giorniDellaSettimana = FormatterRecurrent.GiorniDellaSettimana;
-    string? _ogni;
-    string? _mese;
-    int? _giornoNelMese;
-    string? _settimanaNelMese;
-    string? _giornoDellaSettimana;
-    int _tipoRicorrenzaMensile;
-    TimeOnly? _orario;
+    public EventCallback<IRecurrent?> Change { get; set; }
 
-    protected override void OnParametersSet()
+    private static readonly string[] _ogniOpzioni = ["Giorno", "Settimana", "Mese", "Anno"];
+    private string? _ogni;
+
+    private async Task OnRecurrenceChanged(IRecurrent recurrence)
     {
-        if (Recurrent is null) return;
-
-        var root = Recurrent.GetRoot();
-
-        _ogni = root switch
-        {
-            IYearly => "Anno",
-            IMonthly => "Mese",
-            IWeekly => "Settimana",
-            IDaily => "Giorno",
-            _ => null
-        };
-
-        SetParameters(root);
-    }
-
-    private void OnOgniChanged()
-    {
-        _mese = default;
-        _giornoNelMese = null;
-        _settimanaNelMese = default;
-        _giornoDellaSettimana = default;
-        _tipoRicorrenzaMensile = default;
-        _orario = null;
-    }
-
-    private void OnMeseChanged()
-    {
-        if (_mese is null) return;
-
-        _giorniNelMese = [.. ElencoGiorniNelMese(_mese)];
-
-        _giornoNelMese = _giornoNelMese is not int giorno || giorno < 29
-            || _giorniNelMese.Contains(giorno) ? _giornoNelMese : MaxGiornoNelMese();
-    }
-
-    private void OnTipoRicorrenzaMensileChanged(int tipo)
-    {
-        if (tipo is 0)
-        {
-            _settimanaNelMese = default;
-            _giornoDellaSettimana = default;
-        }
-
-        if (tipo is 1) _giornoNelMese = default;
-    }
-
-    private Task OnGiornoNelMeseChanged() => TrySetRecurrence();
-
-    private Task OnSettimanaNelMeseChanged() => TrySetRecurrence();
-
-    private Task OnGiornoDellaSettimanaChanged() => TrySetRecurrence();
-
-    private Task OnOrarioChanged() => TrySetRecurrence();
-
-    private IRecurrent SetParameters(IRecurrent recurrent)
-    {
-        return recurrent switch
-        {
-            IDaily daily => daily.ForEachAt(x => _orario = new(x.Hour, x.Minute)),
-            IWeekly weekly => weekly.ForEachOn(x =>
-            {
-                _giornoDellaSettimana = x.DayOfWeek.ToFriendlyString();
-                SetParameters(x.Then);
-            }),
-            IMonthly monthly => monthly.ForEachThe(x =>
-            {
-                _giornoNelMese = x.DayOfMonth;
-                _tipoRicorrenzaMensile = 0;
-                SetParameters(x.Then);
-            }, x =>
-            {
-                _settimanaNelMese = x.DayInMonth.ToFriendlyString();
-                _giornoDellaSettimana = x.DayOfWeek.ToFriendlyString();
-                _tipoRicorrenzaMensile = 1;
-                SetParameters(x.Then);
-            }),
-            IYearly yearly => yearly.ForEachIn(x =>
-            {
-                _mese = _mesi[x.Month - 1];
-                SetParameters(x.Then);
-            }),
-            _ => recurrent
-        };
-    }
-
-    private Task TrySetRecurrence()
-    {
-        var wasRecurrentNull = Recurrent is null;
-        Recurrent = TryPickRecurrence();
-
-        return wasRecurrentNull && Recurrent is null
-            ? Task.CompletedTask
-            : RecurrentChanged.InvokeAsync(Recurrent);
-    }
-
-    private IRecurrent? TryPickRecurrence()
-    {
-        return _ogni switch
-        {
-            "Giorno" when _orario is { Hour: int h, Minute: int m } => Occurs.EveryDay().Hour(h).Minute(m),
-
-            "Settimana" when _giornoDellaSettimana is string giorno
-                && _orario is { Hour: int h, Minute: int m }
-                => OccursEveryWeek(giorno).Hour(h).Minute(m),
-
-            "Mese" when (_settimanaNelMese, _giornoDellaSettimana) is (string settimana, string giorno)
-                && _orario is { Hour: int h, Minute: int m }
-                => OccursEveryMonth(settimana, giorno).Hour(h).Minute(m),
-
-            "Mese" when _giornoNelMese is int giorno
-                && _orario is { Hour: int h, Minute: int m }
-                => Occurs.EveryMonth().Day(giorno).Hour(h).Minute(m),
-
-            "Anno" when (_mese, _settimanaNelMese, _giornoDellaSettimana)
-                is (string mese, string settimana, string giorno)
-                && _orario is { Hour: int h, Minute: int m }
-                => OccursEveryYear(mese, settimana, giorno).Hour(h).Minute(m),
-
-            "Anno" when (_mese, _giornoNelMese) is (string mese, int giorno)
-                && _orario is { Hour: int h, Minute: int m }
-                => OccursEveryYear(mese).Day(giorno).Hour(h).Minute(m),
-
-            string ogni when _ogniOpzioni.Contains(ogni) => null,
-
-            _ => throw new ArgumentException($"Unexpected recurrence option '{_ogni}'.", nameof(_ogni))
-        };
-    }
-
-    private int MaxGiornoNelMese()
-    {
-        return _ogni is "Anno" ? _giorniNelMese.Max() : 31;
-    }
-
-    static IHourly OccursEveryMonth(string settimana, string giorno)
-    {
-        var dayOfWeek = ParseDayOfWeek(giorno);
-
-        return settimana switch
-        {
-            "Prima" => Occurs.EveryMonth().First(dayOfWeek),
-            "Seconda" => Occurs.EveryMonth().Second(dayOfWeek),
-            "Terza" => Occurs.EveryMonth().Third(dayOfWeek),
-            "Quarta" => Occurs.EveryMonth().Fourth(dayOfWeek),
-            "Ultima" => Occurs.EveryMonth().Last(dayOfWeek),
-            _ => throw new ArgumentException($"Invalid week of the month '{settimana}'.", nameof(settimana))
-        };
-    }
-
-    static IHourly OccursEveryWeek(string settimana)
-    {
-        return Occurs.EveryWeek().SetDayOfWeek(ParseDayOfWeek(settimana));
-    }
-
-    static DayOfWeek ParseDayOfWeek(string giorno)
-    {
-        return giorno switch
-        {
-            "Lunedì" => DayOfWeek.Monday,
-            "Martedì" => DayOfWeek.Tuesday,
-            "Mercoledì" => DayOfWeek.Wednesday,
-            "Giovedì" => DayOfWeek.Thursday,
-            "Venerdì" => DayOfWeek.Friday,
-            "Sabato" => DayOfWeek.Saturday,
-            "Domenica" => DayOfWeek.Sunday,
-            _ => throw new ArgumentException($"Impossible to parse day of week '{giorno}'.", nameof(giorno))
-        };
-    }
-
-    static IHourly OccursEveryYear(string mese, string settimana, string giorno)
-    {
-        var dayOfWeek = ParseDayOfWeek(giorno);
-
-        return settimana switch
-        {
-            "Prima" => OccursEveryYear(mese).First(dayOfWeek),
-            "Seconda" => OccursEveryYear(mese).Second(dayOfWeek),
-            "Terza" => OccursEveryYear(mese).Third(dayOfWeek),
-            "Quarta" => OccursEveryYear(mese).Fourth(dayOfWeek),
-            "Ultima" => OccursEveryYear(mese).Last(dayOfWeek),
-            _ => throw new ArgumentException($"Invalid week of the month '{settimana}'.", nameof(settimana))
-        };
-    }
-
-    static IWeekly OccursEveryYear(string mese)
-    {
-        return mese switch
-        {
-            "Gennaio" => Occurs.EveryYear().January(),
-            "Febbraio" => Occurs.EveryYear().February(),
-            "Marzo" => Occurs.EveryYear().March(),
-            "Aprile" => Occurs.EveryYear().April(),
-            "Maggio" => Occurs.EveryYear().May(),
-            "Giugno" => Occurs.EveryYear().June(),
-            "Luglio" => Occurs.EveryYear().July(),
-            "Agosto" => Occurs.EveryYear().August(),
-            "Settembre" => Occurs.EveryYear().September(),
-            "Ottobre" => Occurs.EveryYear().October(),
-            "Novembre" => Occurs.EveryYear().November(),
-            "Dicembre" => Occurs.EveryYear().December(),
-            _ => throw new ArgumentException($"The month '{mese}' cannot be mapped.", nameof(mese))
-        };
-    }
-
-    static int NumeroMese(string mese)
-    {
-        return mese switch
-        {
-            "Gennaio" => 1,
-            "Febbraio" => 2,
-            "Marzo" => 3,
-            "Aprile" => 4,
-            "Maggio" => 5,
-            "Giugno" => 6,
-            "Luglio" => 7,
-            "Agosto" => 8,
-            "Settembre" => 9,
-            "Ottobre" => 10,
-            "Novembre" => 11,
-            "Dicembre" => 12,
-            _ => throw new ArgumentException($"The month '{mese}' cannot be mapped.", nameof(mese))
-        };
-    }
-
-    static int GiorniNelMese(string mese)
-    {
-        return NumeroMese(mese) switch
-        {
-            11 or 4 or 6 or 9 => 30,
-            2 => 29,
-            _ => 31
-        };
-    }
-
-    static IEnumerable<int> ElencoGiorniNelMese(string mese)
-    {
-        return Enumerable.Range(1, GiorniNelMese(mese));
+        Recurrent = recurrence;
+        await RecurrentChanged.InvokeAsync(Recurrent);
+        await Change.InvokeAsync(Recurrent);
     }
 }
