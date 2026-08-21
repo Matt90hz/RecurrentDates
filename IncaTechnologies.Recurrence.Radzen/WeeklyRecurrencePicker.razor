@@ -4,7 +4,8 @@
                         @bind-Value=_selectedDays
                         TextProperty=@(nameof(DayViewModel.Text))
                         Data=_days
-                        Multiple="true"
+                        Multiple=true
+                        AllowSelectAll=false
                         Change=OnRecurrenceChanged>
         </RadzenDropDown>
     </ChildContent>
@@ -15,7 +16,7 @@
 
 @foreach (var day in _selectedDays)
 {
-    <RadzenFieldset Text=@day.Text AllowCollapse="true">
+    <RadzenFieldset Text=@day.Text>
         <DailyRecurrencePicker @key=day.Text @bind-DailyRecurrence=day.Daily Change=OnRecurrenceChanged />
     </RadzenFieldset>
 }

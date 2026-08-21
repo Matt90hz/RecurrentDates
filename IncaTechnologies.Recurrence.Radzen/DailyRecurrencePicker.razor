@@ -1,8 +1,8 @@
-
+<RadzenStack Gap="0.15rem">
     <RadzenStack Orientation=Orientation.Horizontal>
-        <RadzenButton class="rz-align-left" Text="Specifica orario" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
+        <RadzenButton Text="Specifica orario" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
     </RadzenStack>
-    <RadzenStack>
+    <RadzenStack Gap="0.15rem">
         @foreach (var (i, x) in _times.Index())
         {
             <div style="display: flex; gap: 1rem">
@@ -14,10 +14,11 @@
                         <RadzenRequiredValidator Component=@(i + "dpTime") />
                     </Helper>
                 </RadzenFormField>
-                <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@(_times.Count is 1) Click=@(() => OnRimuoviClick(x)) />
+                <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=@(() => OnRimuoviClick(x)) />
             </div>
         }
     </RadzenStack>
+</RadzenStack>
 
 @code {
 
@@ -26,10 +27,10 @@
         public TimeOnly? Time { get; set; }
     }
 
-    private readonly List<TimeViewModel> _times = [new TimeViewModel()];
+    private readonly List<TimeViewModel> _times = [];
 
     [Parameter]
-    public IDaily DailyRecurrence { get; set; } = null!;
+    public IDaily DailyRecurrence { get; set; } = (IDaily)Occurs.EveryDay().GetRoot();
 
     [Parameter]
     public EventCallback<IDaily> DailyRecurrenceChanged { get; set; }
@@ -53,8 +54,6 @@
 
     private async Task OnRimuoviClick(TimeViewModel viewModel)
     {
-        if (_times.Count is 1) return;
-
         _times.Remove(viewModel);
         DailyRecurrence = GenerateRecurrence(_times);
 
