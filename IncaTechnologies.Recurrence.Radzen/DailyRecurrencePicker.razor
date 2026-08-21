@@ -30,13 +30,13 @@
     private readonly List<TimeViewModel> _times = [];
 
     [Parameter]
-    public IDaily DailyRecurrence { get; set; } = (IDaily)Occurs.EveryDay().GetRoot();
+    public IDaily? DailyRecurrence { get; set; }
 
     [Parameter]
-    public EventCallback<IDaily> DailyRecurrenceChanged { get; set; }
+    public EventCallback<IDaily?> DailyRecurrenceChanged { get; set; }
 
     [Parameter]
-    public EventCallback<IDaily> Change { get; set; }
+    public EventCallback<IDaily?> Change { get; set; }
 
 
     private void OnAggiungiClick()
@@ -61,8 +61,10 @@
         await Change.InvokeAsync(DailyRecurrence);
     }
 
-    private static IDaily GenerateRecurrence(IEnumerable<TimeViewModel> viewModels)
+    private static IDaily? GenerateRecurrence(IEnumerable<TimeViewModel> viewModels)
     {
+        if (viewModels.Any() is false) return null; 
+
         var daily = Occurs.EveryDay().At(x =>
         {
             foreach (var vm in viewModels)

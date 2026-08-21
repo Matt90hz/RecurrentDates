@@ -35,13 +35,13 @@
     private IEnumerable<DayViewModel> _selectedDays = [];
 
     [Parameter]
-    public IWeekly WeeklyRecurrence { get; set; } = (IWeekly)Occurs.EveryWeek().GetRoot();
+    public IWeekly? WeeklyRecurrence { get; set; }
 
     [Parameter]
-    public EventCallback<IWeekly> WeeklyRecurrenceChanged { get; set; }
+    public EventCallback<IWeekly?> WeeklyRecurrenceChanged { get; set; }
 
     [Parameter]
-    public EventCallback<IWeekly> Change { get; set; }
+    public EventCallback<IWeekly?> Change { get; set; }
 
     private async Task OnRecurrenceChanged()
     {
@@ -51,8 +51,10 @@
         await Change.InvokeAsync(WeeklyRecurrence);
     }
 
-    private static IWeekly GenerateRecurrence(IEnumerable<DayViewModel> viewModels)
+    private static IWeekly? GenerateRecurrence(IEnumerable<DayViewModel> viewModels)
     {
+        if (viewModels.Any() is false) return null;
+
         var weekly = Occurs.EveryWeek().On(on =>
         {
             foreach (var vm in viewModels)

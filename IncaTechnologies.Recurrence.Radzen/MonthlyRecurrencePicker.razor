@@ -102,13 +102,13 @@
     private readonly List<MonthlyViewModel> _viewModels = [];
 
     [Parameter]
-    public IMonthly MonthlyRecurrence { get; set; } = (IMonthly)Occurs.EveryMonth().GetRoot();
+    public IMonthly? MonthlyRecurrence { get; set; }
 
     [Parameter]
-    public EventCallback<IMonthly> MonthlyRecurrenceChanged { get; set; }
+    public EventCallback<IMonthly?> MonthlyRecurrenceChanged { get; set; }
 
     [Parameter]
-    public EventCallback<IMonthly> Change { get; set; }
+    public EventCallback<IMonthly?> Change { get; set; }
 
     private async Task OnAggiungiGiornoClick()
     {
@@ -136,8 +136,10 @@
         await Change.InvokeAsync(MonthlyRecurrence);
     }
 
-    private static IMonthly GenerateRecurrence(IEnumerable<MonthlyViewModel> viewModels)
+    private static IMonthly? GenerateRecurrence(IEnumerable<MonthlyViewModel> viewModels)
     {
+        if (viewModels.Any() is false) return null;
+
         var monthly = Occurs.EveryMonth().The(the =>
         {
             foreach (var vm in viewModels)

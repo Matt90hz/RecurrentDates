@@ -32,13 +32,13 @@
     private IEnumerable<MonthViewModel> _selectedMonths = [];
 
     [Parameter]
-    public IYearly YearlyRecurrence { get; set; } = (IYearly)Occurs.EveryYear().GetRoot();
+    public IYearly? YearlyRecurrence { get; set; }
 
     [Parameter]
-    public EventCallback<IYearly> YearlyRecurrenceChanged { get; set; }
+    public EventCallback<IYearly?> YearlyRecurrenceChanged { get; set; }
 
     [Parameter]
-    public EventCallback<IYearly> Change { get; set; }
+    public EventCallback<IYearly?> Change { get; set; }
 
     private async Task OnRecurrenceChanged()
     {
@@ -48,8 +48,10 @@
         await Change.InvokeAsync(YearlyRecurrence);
     }
 
-    private static IYearly GenerateRecurrence(IEnumerable<MonthViewModel> viewModels)
+    private static IYearly? GenerateRecurrence(IEnumerable<MonthViewModel> viewModels)
     {
+        if (viewModels.Any() is false) return null;
+
         var yearly = Occurs.EveryYear().In(@in =>
         {
             foreach (var vm in viewModels)
