@@ -1,23 +1,23 @@
 ﻿<RadzenStack Visible=@Visible>
     <RadzenFormField Text="Ogni">
-        <RadzenDropDown @bind-Value=_ogni Data=_ogniOpzioni Change="@(x => OnChanged(null))" />
+        <RadzenDropDown Disabled=@Disabled @bind-Value=_ogni Data=_ogniOpzioni Change="@(x => OnChanged(null))" />
     </RadzenFormField>
 
     @if (_ogni is "Giorno")
     {
-        <DailyRecurrencePicker Change=OnChanged />
+        <DailyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
     else if (_ogni is "Settimana")
     {
-        <WeeklyRecurrencePicker Change=OnChanged />
+        <WeeklyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
     else if (_ogni is "Mese")
     {
-        <MonthlyRecurrencePicker Change=OnChanged />
+        <MonthlyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
     else if (_ogni is "Anno")
     {
-        <YearlyRecurrencePicker Change=OnChanged />
+        <YearlyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
 </RadzenStack>
 
@@ -35,5 +35,4 @@
         await ValueChanged.InvokeAsync(Value);
         await Change.InvokeAsync(Value);
     }
-   
 }

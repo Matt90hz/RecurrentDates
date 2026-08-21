@@ -1,7 +1,7 @@
-<RadzenStack>
+<RadzenStack Visible=@Visible>
     <RadzenStack Orientation="Orientation.Horizontal">
-        <RadzenButton Text="Specifica numero" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiGiornoClick" />
-        <RadzenButton Text="Specifica giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiSettimanaClick" />
+        <RadzenButton Text="Specifica numero" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Disabled=@Disabled Click="OnAggiungiGiornoClick" />
+        <RadzenButton Text="Specifica giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Disabled=@Disabled Click="OnAggiungiSettimanaClick" />
     </RadzenStack>
     <RadzenStack Gap="0.5rem">
         @foreach (var (i, vm) in _viewModels.Index())
@@ -20,7 +20,8 @@
                                                    Min="1"
                                                    Max="31"
                                                    Step="1"
-                                                   Change=OnRecurrenceChanged />
+                                                   Disabled=@Disabled
+                                                   Change=OnChanged />
                                 </ChildContent>
                                 <Helper>
                                     <RadzenRequiredValidator Component=@($"nuGiornoNelMese{i}{vm.GetHashCode()}") />
@@ -36,7 +37,8 @@
                                             <RadzenDropDown Name=@($"ddSettimanaNelMese{i}{vm.GetHashCode()}")
                                                             @bind-Value=dim.DayInMonth
                                                             Data=_daysInMonth
-                                                            Change=OnRecurrenceChanged />
+                                                            Disabled=@Disabled
+                                                            Change=OnChanged />
                                         </ChildContent>
                                         <Helper>
                                             <RadzenRequiredValidator Component=@($"ddSettimanaNelMese{i}{vm.GetHashCode()}") />
@@ -49,7 +51,8 @@
                                             <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}{vm.GetHashCode()}")
                                                             @bind-Value=dim.DayOfWeek
                                                             Data=_daysOfWeek
-                                                            Change=OnRecurrenceChanged />
+                                                            Disabled=@Disabled
+                                                            Change=OnChanged />
                                         </ChildContent>
                                         <Helper>
                                             <RadzenRequiredValidator Component=@($"ddGiornoDellaSettimana{i}{vm.GetHashCode()}") />
@@ -63,17 +66,19 @@
                                       Style="align-self: center"
                                       Size="ButtonSize.ExtraSmall"
                                       Variant="Variant.Text"
+                                      Disabled=@Disabled
                                       Click=@(() => OnRimuoviClick(vm)) />
                     </div>
 
 
-                    <DailyRecurrencePicker @key=vm @bind-DailyRecurrence=vm.DailyRecurrence Change=OnRecurrenceChanged />
+                    <DailyRecurrencePicker @key=vm @bind-Value=vm.DailyRecurrence Disabled=@Disabled Change=OnChanged />
                 </RadzenStack>
             </RadzenFieldset>
         }
     </RadzenStack>
 </RadzenStack>
 
+@inherits FormComponent<IMonthly?>
 @using IncaTechnologies.Recurrence
 @code {
 
@@ -97,39 +102,30 @@
     private static readonly string[] _daysOfWeek = [.. Enum.GetValues<DayOfWeek>().Select(FormatterRecurrent.ToFriendlyString)];
     private readonly List<MonthlyViewModel> _viewModels = [];
 
-    [Parameter]
-    public IMonthly? MonthlyRecurrence { get; set; }
-
-    [Parameter]
-    public EventCallback<IMonthly?> MonthlyRecurrenceChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<IMonthly?> Change { get; set; }
-
     private async Task OnAggiungiGiornoClick()
     {
         _viewModels.Add(new DayOfMonthViewModel());
-        await OnRecurrenceChanged();
+        await OnChanged();
     }
 
     private async Task OnAggiungiSettimanaClick()
     {
         _viewModels.Add(new DayInMonthViewModel());
-        await OnRecurrenceChanged();
+        await OnChanged();
     }
 
     private async Task OnRimuoviClick(MonthlyViewModel definition)
     {
         _viewModels.Remove(definition);
-        await OnRecurrenceChanged();
+        await OnChanged();
     }
 
-    private async Task OnRecurrenceChanged()
+    private async Task OnChanged()
     {
-        MonthlyRecurrence = GenerateRecurrence(_viewModels);
+        Value = GenerateRecurrence(_viewModels);
 
-        await MonthlyRecurrenceChanged.InvokeAsync(MonthlyRecurrence);
-        await Change.InvokeAsync(MonthlyRecurrence);
+        await ValueChanged.InvokeAsync(Value);
+        await Change.InvokeAsync(Value);
     }
 
     private static IMonthly? GenerateRecurrence(IEnumerable<MonthlyViewModel> viewModels)

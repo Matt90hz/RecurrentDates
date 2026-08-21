@@ -1,6 +1,6 @@
-<RadzenStack Gap="0.15rem">
+<RadzenStack Visible=@Visible Gap="0.15rem">
     <RadzenStack Orientation=Orientation.Horizontal>
-        <RadzenButton Text="Specifica orario" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
+        <RadzenButton Text="Specifica orario" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@Disabled Click=OnAggiungiClick />
     </RadzenStack>
     <RadzenStack Gap="0.15rem">
         @foreach (var (i, x) in _times.Index())
@@ -8,18 +8,20 @@
             <div style="display: flex; gap: 1rem">
                 <RadzenFormField Style="flex-grow: 1" Text="Alle">
                     <ChildContent>
-                        <RadzenDatePicker Name=@($"dpTime{i}{x.GetHashCode()}") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
+                        <RadzenDatePicker Name=@($"dpTime{i}{x.GetHashCode()}") @bind-Value=x.Time TimeOnly=true Disabled=@Disabled Change=OnDatePickerChange />
                     </ChildContent>
                     <Helper>
                         <RadzenRequiredValidator Component=@($"dpTime{i}{x.GetHashCode()}") />
                     </Helper>
                 </RadzenFormField>
-                <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=@(() => OnRimuoviClick(x)) />
+                <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@Disabled Click=@(() => OnRimuoviClick(x)) />
             </div>
         }
     </RadzenStack>
 </RadzenStack>
 
+@inherits FormComponent<IDaily?>
+@using IncaTechnologies.Recurrence
 @code {
 
     private sealed class TimeViewModel
@@ -29,16 +31,6 @@
 
     private readonly List<TimeViewModel> _times = [];
 
-    [Parameter]
-    public IDaily? DailyRecurrence { get; set; }
-
-    [Parameter]
-    public EventCallback<IDaily?> DailyRecurrenceChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<IDaily?> Change { get; set; }
-
-
     private void OnAggiungiClick()
     {
         _times.Add(new());
@@ -46,19 +38,19 @@
 
     private async Task OnDatePickerChange()
     {
-        DailyRecurrence = GenerateRecurrence(_times);
+        Value = GenerateRecurrence(_times);
 
-        await DailyRecurrenceChanged.InvokeAsync(DailyRecurrence);
-        await Change.InvokeAsync(DailyRecurrence);
+        await ValueChanged.InvokeAsync(Value);
+        await Change.InvokeAsync(Value);
     }
 
     private async Task OnRimuoviClick(TimeViewModel viewModel)
     {
         _times.Remove(viewModel);
-        DailyRecurrence = GenerateRecurrence(_times);
+        Value = GenerateRecurrence(_times);
 
-        await DailyRecurrenceChanged.InvokeAsync(DailyRecurrence);
-        await Change.InvokeAsync(DailyRecurrence);
+        await ValueChanged.InvokeAsync(Value);
+        await Change.InvokeAsync(Value);
     }
 
     private static IDaily? GenerateRecurrence(IEnumerable<TimeViewModel> viewModels)

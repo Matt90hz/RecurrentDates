@@ -1,24 +1,28 @@
-<RadzenFormField Text="Nei mesi di">
-    <ChildContent>
-        <RadzenDropDown Name="ddMesi"
-                        @bind-Value=_selectedMonths
-                        TextProperty="Text"
-                        Data=_months
-                        Multiple=true
-                        AllowSelectAll=false
-                        Change=OnRecurrenceChanged />
-    </ChildContent>
-    <Helper>
-        <RadzenRequiredValidator Component="ddMesi" />
-    </Helper>
-</RadzenFormField>
-@foreach (var month in _selectedMonths)
-{
-    <RadzenFieldset Text=@month.Text>
-        <MonthlyRecurrencePicker @bind-MonthlyRecurrence=month.MonthlyRecurrence Change=OnRecurrenceChanged />
-    </RadzenFieldset>
-}
+<RadzenStack Visible=@Visible>
+    <RadzenFormField Text="Nei mesi di">
+        <ChildContent>
+            <RadzenDropDown Name="ddMesi"
+                            @bind-Value=_selectedMonths
+                            TextProperty="Text"
+                            Data=_months
+                            Multiple=true
+                            AllowSelectAll=false
+                            Disabled=@Disabled
+                            Change=OnChanged />
+        </ChildContent>
+        <Helper>
+            <RadzenRequiredValidator Component="ddMesi" />
+        </Helper>
+    </RadzenFormField>
+    @foreach (var month in _selectedMonths)
+    {
+        <RadzenFieldset Text=@month.Text>
+            <MonthlyRecurrencePicker @bind-Value=month.MonthlyRecurrence Disabled=@Disabled Change=OnChanged />
+        </RadzenFieldset>
+    }
+</RadzenStack>
 
+@inherits FormComponent<IYearly?>
 @using IncaTechnologies.Recurrence
 @code {
     private sealed class MonthViewModel(int month, string text)
@@ -31,21 +35,12 @@
     private static readonly IEnumerable<MonthViewModel> _months = [.. FormatterRecurrent.Mesi.Select((x, i) => new MonthViewModel(i + 1, x))];
     private IEnumerable<MonthViewModel> _selectedMonths = [];
 
-    [Parameter]
-    public IYearly? YearlyRecurrence { get; set; }
-
-    [Parameter]
-    public EventCallback<IYearly?> YearlyRecurrenceChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<IYearly?> Change { get; set; }
-
-    private async Task OnRecurrenceChanged()
+    private async Task OnChanged()
     {
-        YearlyRecurrence = GenerateRecurrence(_selectedMonths);
+        Value = GenerateRecurrence(_selectedMonths);
 
-        await YearlyRecurrenceChanged.InvokeAsync(YearlyRecurrence);
-        await Change.InvokeAsync(YearlyRecurrence);
+        await ValueChanged.InvokeAsync(Value);
+        await Change.InvokeAsync(Value);
     }
 
     private static IYearly? GenerateRecurrence(IEnumerable<MonthViewModel> viewModels)

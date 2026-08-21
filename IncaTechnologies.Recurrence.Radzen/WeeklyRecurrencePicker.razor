@@ -1,26 +1,30 @@
-<RadzenFormField Text="Giorno" Style="width: 100%">
-    <ChildContent>
-        <RadzenDropDown Name="ddGiorno"
-                        @bind-Value=_selectedDays
-                        TextProperty=@(nameof(DayViewModel.Text))
-                        Data=_days
-                        Multiple=true
-                        AllowSelectAll=false
-                        Change=OnRecurrenceChanged>
-        </RadzenDropDown>
-    </ChildContent>
-    <Helper>
-        <RadzenRequiredValidator Component="ddGiorno" />
-    </Helper>
-</RadzenFormField>
+<RadzenStack Visible=@Visible>
+    <RadzenFormField Text="Giorno" Style="width: 100%">
+        <ChildContent>
+            <RadzenDropDown Name="ddGiorno"
+                            @bind-Value=_selectedDays
+                            TextProperty=@(nameof(DayViewModel.Text))
+                            Data=_days
+                            Multiple=true
+                            AllowSelectAll=false
+                            Disabled=@Disabled
+                            Change=OnChanged>
+            </RadzenDropDown>
+        </ChildContent>
+        <Helper>
+            <RadzenRequiredValidator Component="ddGiorno" />
+        </Helper>
+    </RadzenFormField>
 
-@foreach (var day in _selectedDays)
-{
-    <RadzenFieldset Text=@day.Text>
-        <DailyRecurrencePicker @key=day.Text @bind-DailyRecurrence=day.Daily Change=OnRecurrenceChanged />
-    </RadzenFieldset>
-}
+    @foreach (var day in _selectedDays)
+    {
+        <RadzenFieldset Text=@day.Text>
+            <DailyRecurrencePicker @key=day.Text @bind-Value=day.Daily Disabled=@Disabled Change=OnChanged />
+        </RadzenFieldset>
+    }
+</RadzenStack>
 
+@inherits FormComponent<IWeekly?>
 @using IncaTechnologies.Recurrence
 @code {
 
@@ -34,21 +38,12 @@
     private readonly IEnumerable<DayViewModel> _days = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayViewModel(x))];
     private IEnumerable<DayViewModel> _selectedDays = [];
 
-    [Parameter]
-    public IWeekly? WeeklyRecurrence { get; set; }
-
-    [Parameter]
-    public EventCallback<IWeekly?> WeeklyRecurrenceChanged { get; set; }
-
-    [Parameter]
-    public EventCallback<IWeekly?> Change { get; set; }
-
-    private async Task OnRecurrenceChanged()
+    private async Task OnChanged()
     {
-        WeeklyRecurrence = GenerateRecurrence(_selectedDays);
+        Value = GenerateRecurrence(_selectedDays);
 
-        await WeeklyRecurrenceChanged.InvokeAsync(WeeklyRecurrence);
-        await Change.InvokeAsync(WeeklyRecurrence);
+        await ValueChanged.InvokeAsync(Value);
+        await Change.InvokeAsync(Value);
     }
 
     private static IWeekly? GenerateRecurrence(IEnumerable<DayViewModel> viewModels)
