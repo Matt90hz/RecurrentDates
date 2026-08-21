@@ -102,7 +102,7 @@
     private readonly List<MonthlyViewModel> _viewModels = [];
 
     [Parameter]
-    public IMonthly MonthlyRecurrence { get; set; } = null!;
+    public IMonthly MonthlyRecurrence { get; set; } = (IMonthly)Occurs.EveryMonth().GetRoot();
 
     [Parameter]
     public EventCallback<IMonthly> MonthlyRecurrenceChanged { get; set; }

@@ -35,7 +35,7 @@
     private IEnumerable<DayViewModel> _selectedDays = [];
 
     [Parameter]
-    public IWeekly WeeklyRecurrence { get; set; } = null!;
+    public IWeekly WeeklyRecurrence { get; set; } = (IWeekly)Occurs.EveryWeek().GetRoot();
 
     [Parameter]
     public EventCallback<IWeekly> WeeklyRecurrenceChanged { get; set; }

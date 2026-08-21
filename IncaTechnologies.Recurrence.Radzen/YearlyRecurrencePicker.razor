@@ -32,7 +32,7 @@
     private IEnumerable<MonthViewModel> _selectedMonths = [];
 
     [Parameter]
-    public IYearly YearlyRecurrence { get; set; } = null!;
+    public IYearly YearlyRecurrence { get; set; } = (IYearly)Occurs.EveryYear().GetRoot();
 
     [Parameter]
     public EventCallback<IYearly> YearlyRecurrenceChanged { get; set; }
