@@ -7,16 +7,14 @@
         @foreach (var (i, vm) in _viewModels.Index())
         {
             <RadzenFieldset Style="padding-top: 0.5rem">
-
                 <RadzenStack>
-
                     <div style="display:flex; gap: 1rem">
 
                         @if (vm is DayOfMonthViewModel dayOfMonth)
                         {
                             <RadzenFormField Text="Il" Style="flex-grow: 1">
                                 <ChildContent>
-                                    <RadzenNumeric Name=@($"nuGiornoNelMese{i}")
+                                    <RadzenNumeric Name=@($"nuGiornoNelMese{i}{vm.GetHashCode()}")
                                                    @bind-Value=dayOfMonth.DayOfMonth
                                                    TValue="int?"
                                                    Min="1"
@@ -25,7 +23,7 @@
                                                    Change=OnRecurrenceChanged />
                                 </ChildContent>
                                 <Helper>
-                                    <RadzenRequiredValidator Component=@($"nuGiornoNelMese{i}") />
+                                    <RadzenRequiredValidator Component=@($"nuGiornoNelMese{i}{vm.GetHashCode()}") />
                                 </Helper>
                             </RadzenFormField>
                         }
@@ -35,26 +33,26 @@
                                 <RadzenColumn>
                                     <RadzenFormField class="rz-w-100" Text="La">
                                         <ChildContent>
-                                            <RadzenDropDown Name=@($"ddSettimanaNelMese{i}")
+                                            <RadzenDropDown Name=@($"ddSettimanaNelMese{i}{vm.GetHashCode()}")
                                                             @bind-Value=weekOfMonth.WeekOfMonth
                                                             Data=_weeksOfMonth
                                                             Change=OnRecurrenceChanged />
                                         </ChildContent>
                                         <Helper>
-                                            <RadzenRequiredValidator Component=@($"ddSettimanaNelMese{i}") />
+                                            <RadzenRequiredValidator Component=@($"ddSettimanaNelMese{i}{vm.GetHashCode()}") />
                                         </Helper>
                                     </RadzenFormField>
                                 </RadzenColumn>
                                 <RadzenColumn>
                                     <RadzenFormField class="rz-w-100" Text="Di">
                                         <ChildContent>
-                                            <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}")
+                                            <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}{vm.GetHashCode()}")
                                                             @bind-Value=weekOfMonth.DayOfWeek
                                                             Data=_daysOfWeek
                                                             Change=OnRecurrenceChanged />
                                         </ChildContent>
                                         <Helper>
-                                            <RadzenRequiredValidator Component=@($"ddGiornoDellaSettimana{i}") />
+                                            <RadzenRequiredValidator Component=@($"ddGiornoDellaSettimana{i}{vm.GetHashCode()}") />
                                         </Helper>
                                     </RadzenFormField>
                                 </RadzenColumn>
@@ -71,9 +69,7 @@
 
                     <DailyRecurrencePicker @key=vm @bind-DailyRecurrence=vm.DailyRecurrence Change=OnRecurrenceChanged />
                 </RadzenStack>
-
             </RadzenFieldset>
-
         }
     </RadzenStack>
 </RadzenStack>

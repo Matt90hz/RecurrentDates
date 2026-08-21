@@ -8,10 +8,10 @@
             <div style="display: flex; gap: 1rem">
                 <RadzenFormField Style="flex-grow: 1" Text="Alle">
                     <ChildContent>
-                        <RadzenDatePicker Name=@(i + "dpTime") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
+                        <RadzenDatePicker Name=@($"dpTime{i}{x.GetHashCode()}") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
                     </ChildContent>
                     <Helper>
-                        <RadzenRequiredValidator Component=@(i + "dpTime") />
+                        <RadzenRequiredValidator Component=@($"dpTime{i}{x.GetHashCode()}") />
                     </Helper>
                 </RadzenFormField>
                 <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=@(() => OnRimuoviClick(x)) />
