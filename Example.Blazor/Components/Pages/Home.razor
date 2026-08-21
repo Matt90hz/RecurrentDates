@@ -1,8 +1,26 @@
 ﻿@page "/"
+@using System.Text.Json
+@using IncaTechnologies.Recurrence
 @using IncaTechnologies.Recurrence.Radzen
 
 <PageTitle>Home</PageTitle>
 
-<div style="max-width:600px; margin: 20px">
-    <RecurrencePicker />
-</div>
+<RadzenRow Style="max-width: 1200px; margin: 20px">
+    <RadzenColumn>
+        <RecurrencePicker @bind-Recurrent=_recurrent />
+    </RadzenColumn>
+    <RadzenColumn>
+        <RadzenFieldset Text="Log">
+            <RadzenText Text=@(_recurrent?.ToFriendlyString()) />
+        </RadzenFieldset>
+    </RadzenColumn>
+</RadzenRow>
+
+@code
+{
+    private IRecurrent? _recurrent;
+    private JsonSerializerOptions _jsonSerializerOptions = new()
+    {
+        WriteIndented = true
+    };
+}

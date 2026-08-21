@@ -2,13 +2,13 @@
 
 namespace IncaTechnologies.Recurrence.Radzen;
 
-internal static class FormatterRecurrent
+public static class FormatterRecurrent
 {
     internal static readonly string[] Mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
     internal static readonly string[] SettimaneNelMese = ["Prima", "Seconda", "Terza", "Quarta", "Ultima"];
     internal static readonly string[] GiorniDellaSettimana = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
 
-    internal static string ToFriendlyString(this IRecurrent recurrent)
+    public static string ToFriendlyString(this IRecurrent recurrent)
     {
         var sb = new StringBuilder();
 
