@@ -5,22 +5,40 @@
 
 <PageTitle>Home</PageTitle>
 
-<RadzenRow Style="max-width: 1200px; margin: 20px">
-    <RadzenColumn>
-        <RecurrencePicker @bind-Recurrent=_recurrent />
-    </RadzenColumn>
-    <RadzenColumn>
-        <RadzenFieldset Text="Log">
-            <RadzenText Text=@(_recurrent?.ToFriendlyString()) />
-        </RadzenFieldset>
-    </RadzenColumn>
-</RadzenRow>
+<RadzenTemplateForm TItem="ViewModel" Data=@model Style="width: 1200px; margin: 20px" Submit=OnSubmit InvalidSubmit=OnInvalid>
+    <RadzenStack >
+        <RadzenRow >
+            <RadzenColumn>
+                <RecurrencePicker Name="picker" @bind-Value=model.Recurrent />
+                <RadzenRequiredValidator Component="picker" />
+            </RadzenColumn>
+            <RadzenColumn>
+                <RadzenFieldset Text="Log">
+                    <RadzenText Text=@model.Recurrent?.ToFriendlyString() />
+                </RadzenFieldset>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenButton Text="Submit" ButtonType=ButtonType.Submit />
+    </RadzenStack>
+</RadzenTemplateForm>
 
+@inject NotificationService _notification
 @code
 {
-    private IRecurrent? _recurrent;
-    private JsonSerializerOptions _jsonSerializerOptions = new()
+    private class ViewModel
     {
-        WriteIndented = true
-    };
+        public IRecurrent? Recurrent { get; set; }
+    }
+
+    private ViewModel model = new();
+
+    private void OnSubmit()
+    {
+        _notification.Notify(NotificationSeverity.Success, "Good");
+    }
+
+    private void OnInvalid(FormInvalidSubmitEventArgs args)
+    {
+        _notification.Notify(NotificationSeverity.Error, args.Errors?.First() ?? "");
+    }
 }

@@ -1,49 +1,39 @@
-﻿<RadzenStack>
+﻿<RadzenStack Visible=@Visible>
     <RadzenFormField Text="Ogni">
-        <ChildContent>
-            <RadzenDropDown Name="ddOgni" @bind-Value=_ogni Data=_ogniOpzioni/>
-        </ChildContent>
-        <Helper>
-            <RadzenRequiredValidator Component="ddOgni" />
-        </Helper>
+        <RadzenDropDown @bind-Value=_ogni Data=_ogniOpzioni Change="@(x => OnChanged(null))" />
     </RadzenFormField>
 
     @if (_ogni is "Giorno")
     {
-        <DailyRecurrencePicker Change=OnRecurrenceChanged />
+        <DailyRecurrencePicker Change=OnChanged />
     }
     else if (_ogni is "Settimana")
     {
-        <WeeklyRecurrencePicker Change=OnRecurrenceChanged />
+        <WeeklyRecurrencePicker Change=OnChanged />
     }
     else if (_ogni is "Mese")
     {
-        <MonthlyRecurrencePicker Change=OnRecurrenceChanged />
+        <MonthlyRecurrencePicker Change=OnChanged />
     }
     else if (_ogni is "Anno")
     {
-        <YearlyRecurrencePicker Change=OnRecurrenceChanged />
+        <YearlyRecurrencePicker Change=OnChanged />
     }
 </RadzenStack>
 
+@inherits FormComponent<IRecurrent?>
 @using IncaTechnologies.Recurrence
-@code {
-
-    [Parameter]
-    public IRecurrent? Recurrent { get; set; }
-
-    [Parameter]
-    public EventCallback<IRecurrent?> RecurrentChanged { get; set; }
-
-    public EventCallback<IRecurrent?> Change { get; set; }
-
+@code 
+{
     private static readonly string[] _ogniOpzioni = ["Giorno", "Settimana", "Mese", "Anno"];
     private string? _ogni;
 
-    private async Task OnRecurrenceChanged(IRecurrent recurrence)
+    private async Task OnChanged(IRecurrent? recurrence)
     {
-        Recurrent = recurrence;
-        await RecurrentChanged.InvokeAsync(Recurrent);
-        await Change.InvokeAsync(Recurrent);
+        Value = recurrence;
+
+        await ValueChanged.InvokeAsync(Value);
+        await Change.InvokeAsync(Value);
     }
+   
 }
