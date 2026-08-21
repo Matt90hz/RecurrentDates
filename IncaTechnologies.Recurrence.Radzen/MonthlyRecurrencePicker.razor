@@ -1,7 +1,7 @@
 <RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
-        <RadzenButton Text="Specifica giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiGiornoClick" />
-        <RadzenButton Text="Specifica settimana" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiSettimanaClick" />
+        <RadzenButton Text="Specifica numero" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiGiornoClick" />
+        <RadzenButton Text="Specifica giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiSettimanaClick" />
     </RadzenStack>
     <RadzenStack Gap="0.5rem">
         @foreach (var (i, vm) in _viewModels.Index())
@@ -10,12 +10,12 @@
                 <RadzenStack>
                     <div style="display:flex; gap: 1rem">
 
-                        @if (vm is DayOfMonthViewModel dayOfMonth)
+                        @if (vm is DayOfMonthViewModel dom)
                         {
-                            <RadzenFormField Text="Il" Style="flex-grow: 1">
+                            <RadzenFormField Text="Numero" Style="flex-grow: 1">
                                 <ChildContent>
                                     <RadzenNumeric Name=@($"nuGiornoNelMese{i}{vm.GetHashCode()}")
-                                                   @bind-Value=dayOfMonth.DayOfMonth
+                                                   @bind-Value=dom.DayOfMonth
                                                    TValue="int?"
                                                    Min="1"
                                                    Max="31"
@@ -27,15 +27,15 @@
                                 </Helper>
                             </RadzenFormField>
                         }
-                        else if (vm is WeekOfMonthViewModel weekOfMonth)
+                        else if (vm is DayInMonthViewModel dim)
                         {
                             <RadzenRow Style="flex-grow: 1">
                                 <RadzenColumn>
-                                    <RadzenFormField class="rz-w-100" Text="La">
+                                    <RadzenFormField class="rz-w-100" Text="Nel">
                                         <ChildContent>
                                             <RadzenDropDown Name=@($"ddSettimanaNelMese{i}{vm.GetHashCode()}")
-                                                            @bind-Value=weekOfMonth.WeekOfMonth
-                                                            Data=_weeksOfMonth
+                                                            @bind-Value=dim.DayInMonth
+                                                            Data=_daysInMonth
                                                             Change=OnRecurrenceChanged />
                                         </ChildContent>
                                         <Helper>
@@ -44,10 +44,10 @@
                                     </RadzenFormField>
                                 </RadzenColumn>
                                 <RadzenColumn>
-                                    <RadzenFormField class="rz-w-100" Text="Di">
+                                    <RadzenFormField class="rz-w-100" Text="Giorno">
                                         <ChildContent>
                                             <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}{vm.GetHashCode()}")
-                                                            @bind-Value=weekOfMonth.DayOfWeek
+                                                            @bind-Value=dim.DayOfWeek
                                                             Data=_daysOfWeek
                                                             Change=OnRecurrenceChanged />
                                         </ChildContent>
@@ -84,17 +84,17 @@
 
     private sealed class DayOfMonthViewModel : MonthlyViewModel
     {
-        public int? DayOfMonth { get; set; } = 1;
+        public int? DayOfMonth { get; set; }
     }
 
-    private sealed class WeekOfMonthViewModel : MonthlyViewModel
+    private sealed class DayInMonthViewModel : MonthlyViewModel
     {
-        public string? WeekOfMonth { get; set; } = _weeksOfMonth[0];
-        public string? DayOfWeek { get; set; } = _daysOfWeek[0];
+        public string? DayInMonth { get; set; } 
+        public string? DayOfWeek { get; set; }
     }
 
-    private static readonly string[] _weeksOfMonth = FormatterRecurrent.SettimaneNelMese;
-    private static readonly string[] _daysOfWeek = FormatterRecurrent.GiorniDellaSettimana;
+    private static readonly string[] _daysInMonth = [.. Enum.GetValues<DayInMonth>().Select(FormatterRecurrent.ToFriendlyString)];
+    private static readonly string[] _daysOfWeek = [.. Enum.GetValues<DayOfWeek>().Select(FormatterRecurrent.ToFriendlyString)];
     private readonly List<MonthlyViewModel> _viewModels = [];
 
     [Parameter]
@@ -114,7 +114,7 @@
 
     private async Task OnAggiungiSettimanaClick()
     {
-        _viewModels.Add(new WeekOfMonthViewModel());
+        _viewModels.Add(new DayInMonthViewModel());
         await OnRecurrenceChanged();
     }
 
@@ -134,7 +134,11 @@
 
     private static IMonthly? GenerateRecurrence(IEnumerable<MonthlyViewModel> viewModels)
     {
-        if (viewModels.Any() is false) return null;
+        if (viewModels.Any() is false
+            || viewModels.Any(x => x 
+                is DayOfMonthViewModel { DayOfMonth: null } 
+                or DayInMonthViewModel { DayInMonth: null } 
+                or DayInMonthViewModel { DayOfWeek: null })) return null;
 
         var monthly = Occurs.EveryMonth().The(the =>
         {
@@ -143,8 +147,8 @@
                 var hourly = vm switch
                 {
                     DayOfMonthViewModel { DayOfMonth: int d } => the.Day(d),
-                    WeekOfMonthViewModel { WeekOfMonth: string w, DayOfWeek: string d } => the.SetDayInMonth(ParseDayInMonth(w), ParseDayOfWeek(d)),
-                    _ => throw new Exception()
+                    DayInMonthViewModel { DayInMonth: string w, DayOfWeek: string d } => the.SetDayInMonth(ParseDayInMonth(w), ParseDayOfWeek(d)),
+                    _ => throw new Exception("Should be impossible to reach.")
                 };
 
                 hourly.At(at =>
@@ -162,11 +166,11 @@
 
     private static DayInMonth ParseDayInMonth(string x) => x switch
     {
-        "Prima" => DayInMonth.First,
-        "Seconda" => DayInMonth.Second,
-        "Terza" => DayInMonth.Third,
-        "Quarta" => DayInMonth.Fourth,
-        "Ultima" => DayInMonth.Last,
+        "Primo" => DayInMonth.First,
+        "Secondo" => DayInMonth.Second,
+        "Terzo" => DayInMonth.Third,
+        "Quarto" => DayInMonth.Fourth,
+        "Ultimo" => DayInMonth.Last,
         _ => throw new ArgumentException($"Impossible to parse day in month '{x}'.", nameof(x))
     };
 

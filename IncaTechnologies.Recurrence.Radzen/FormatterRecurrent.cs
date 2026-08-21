@@ -5,8 +5,6 @@ namespace IncaTechnologies.Recurrence.Radzen;
 public static class FormatterRecurrent
 {
     internal static readonly string[] Mesi = ["Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"];
-    internal static readonly string[] SettimaneNelMese = ["Prima", "Seconda", "Terza", "Quarta", "Ultima"];
-    internal static readonly string[] GiorniDellaSettimana = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica"];
 
     public static string ToFriendlyString(this IRecurrent recurrent)
     {
@@ -45,11 +43,12 @@ public static class FormatterRecurrent
 
             }, x =>
             {
-                sb.Append(", ");
+                sb.Append(x.DayOfWeek is DayOfWeek.Sunday ? ", la ": ", il ");
+                sb.Append(x.DayOfWeek is DayOfWeek.Sunday 
+                    ? x.DayInMonth.ToFriendlyString().ToLower().TrimEnd('o') + "a" 
+                    : x.DayInMonth.ToFriendlyString().ToLower());
+                sb.Append(' ');
                 sb.Append(x.DayOfWeek.ToFriendlyString().ToLower());
-                sb.Append(" della ");
-                sb.Append(x.DayInMonth.ToFriendlyString().ToLower());
-                sb.Append(" settimana");
                 sb.AppendRecurrent(x.Then);
             }),
             IWeekly w => w.ForEachOn(x =>
@@ -75,11 +74,11 @@ public static class FormatterRecurrent
     {
         return dayInMonth switch
         {
-            DayInMonth.First => "Prima",
-            DayInMonth.Second => "Seconda",
-            DayInMonth.Third => "Terza",
-            DayInMonth.Fourth => "Quarta",
-            DayInMonth.Last => "Ultima",
+            DayInMonth.First => "Primo",
+            DayInMonth.Second => "Secondo",
+            DayInMonth.Third => "Terzo",
+            DayInMonth.Fourth => "Quarto",
+            DayInMonth.Last => "Ultimo",
             _ => string.Empty
         };
     }
