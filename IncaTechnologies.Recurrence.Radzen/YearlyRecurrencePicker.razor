@@ -16,7 +16,7 @@
 
 @foreach (var month in _selectedMonths)
 {
-    <RadzenFieldset Text=@month.Text>
+    <RadzenFieldset Text=@month.Text AllowCollapse=true >
         <MonthlyRecurrencePicker @bind-MonthlyRecurrence=month.MonthlyRecurrence Change=OnRecurrenceChanged />
     </RadzenFieldset>
 }
