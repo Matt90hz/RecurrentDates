@@ -1,16 +1,16 @@
 <RadzenStack>
     <RadzenStack Orientation="Orientation.Horizontal">
-        <RadzenButton Text="Aggiungi giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiGiornoClick" />
-        <RadzenButton Text="Aggiungi settimana" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiSettimanaClick" />
+        <RadzenButton Text="Specifica giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiGiornoClick" />
+        <RadzenButton Text="Specifica settimana" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Click="OnAggiungiSettimanaClick" />
     </RadzenStack>
 
     @foreach (var (i, vm) in _viewModels.Index())
     {
-        <RadzenFieldset Text=@vm.Title AllowCollapse="true">
+        <RadzenFieldset Text=@(vm is DayOfMonthViewModel ? "Giorno" : "Settimana") AllowCollapse="true">
             <RadzenStack>
                 @if (vm is DayOfMonthViewModel dayOfMonth)
                 {
-                    <RadzenFormField Text="Giorno del mese">
+                    <RadzenFormField Text="Il">
                         <ChildContent>
                             <RadzenNumeric Name=@($"nuGiornoNelMese{i}")
                                            @bind-Value=dayOfMonth.DayOfMonth
@@ -29,7 +29,7 @@
                 {
                     <RadzenRow>
                         <RadzenColumn>
-                            <RadzenFormField class="rz-w-100" Text="Settimana">
+                            <RadzenFormField class="rz-w-100" Text="La">
                                 <ChildContent>
                                     <RadzenDropDown Name=@($"ddSettimanaNelMese{i}")
                                                     @bind-Value=weekOfMonth.WeekOfMonth
@@ -42,7 +42,7 @@
                             </RadzenFormField>
                         </RadzenColumn>
                         <RadzenColumn>
-                            <RadzenFormField class="rz-w-100" Text="Giorno della settimana">
+                            <RadzenFormField class="rz-w-100" Text="Di">
                                 <ChildContent>
                                     <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}")
                                                     @bind-Value=weekOfMonth.DayOfWeek
@@ -74,21 +74,17 @@
     private abstract class MonthlyViewModel
     {
         public IDaily? DailyRecurrence { get; set; }
-        public abstract string Title { get; }
     }
 
     private sealed class DayOfMonthViewModel : MonthlyViewModel
     {
-        public override string Title { get; } = "Giorno del mese";
         public int? DayOfMonth { get; set; } = 1;
     }
 
     private sealed class WeekOfMonthViewModel : MonthlyViewModel
     {
-        public override string Title { get; } = "Settimana del mese";
         public string? WeekOfMonth { get; set; } = _weeksOfMonth[0];
         public string? DayOfWeek { get; set; } = _daysOfWeek[0];
-
     }
 
     private static readonly string[] _weeksOfMonth = FormatterRecurrent.SettimaneNelMese;

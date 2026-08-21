@@ -1,24 +1,25 @@
-<RadzenStack>
-    <RadzenStack Orientation=Orientation.Horizontal>
-        <RadzenButton class="rz-align-left" Text="Aggiungi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
-    </RadzenStack>
-    @foreach (var (i, x) in _times.Index())
-    {
-        <div style="display: flex; gap: 1rem">
-            <RadzenFormField Style="flex-grow: 1" Text="Ore">
-                <ChildContent>
-                    <RadzenDatePicker Name=@(i + "dpTime") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
-                </ChildContent>
-                <Helper>
-                    <RadzenRequiredValidator Component=@(i + "dpTime") />
-                </Helper>
-            </RadzenFormField>
-            <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@(_times.Count is 1) Click=@(() => OnRimuoviClick(x)) />
-        </div>
-    }
-</RadzenStack>
 
-    @code {
+    <RadzenStack Orientation=Orientation.Horizontal>
+        <RadzenButton class="rz-align-left" Text="Specifica orario" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Click=OnAggiungiClick />
+    </RadzenStack>
+    <RadzenStack>
+        @foreach (var (i, x) in _times.Index())
+        {
+            <div style="display: flex; gap: 1rem">
+                <RadzenFormField Style="flex-grow: 1" Text="Alle">
+                    <ChildContent>
+                        <RadzenDatePicker Name=@(i + "dpTime") @bind-Value=x.Time TimeOnly=true Change=OnDatePickerChange />
+                    </ChildContent>
+                    <Helper>
+                        <RadzenRequiredValidator Component=@(i + "dpTime") />
+                    </Helper>
+                </RadzenFormField>
+                <RadzenButton Style="align-self: center" Text="Rimuovi" Size="ButtonSize.ExtraSmall" Variant=Variant.Text Disabled=@(_times.Count is 1) Click=@(() => OnRimuoviClick(x)) />
+            </div>
+        }
+    </RadzenStack>
+
+@code {
 
     private sealed class TimeViewModel
     {
