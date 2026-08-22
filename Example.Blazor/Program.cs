@@ -1,12 +1,20 @@
 using Example.Blazor.Components;
+using IncaTechnologies.Recurrence.Radzen;
 using Radzen;
+using System.Collections;
+using System.Globalization;
+using System.Reflection;
+using System.Resources;
 
 var builder = WebApplication.CreateBuilder(args);
+
+CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("it");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddScoped<ILocalizer, RecurrenceLocalizer>();
 builder.Services.AddRadzenComponents();
 
 var app = builder.Build();

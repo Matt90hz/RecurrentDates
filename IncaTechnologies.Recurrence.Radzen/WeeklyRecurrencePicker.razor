@@ -1,5 +1,5 @@
 <RadzenStack Visible=@Visible>
-    <RadzenFormField Text="Giorno" Style="width: 100%">
+    <RadzenFormField Text=@DayCaption Style="width: 100%">
         <ChildContent>
             <RadzenDropDown Name="ddGiorno"
                             @bind-Value=_selectedDays
@@ -25,18 +25,59 @@
 </RadzenStack>
 
 @inherits FormComponent<IWeekly?>
+@inject ILocalizer _localizer;
 @using IncaTechnologies.Recurrence
 @code {
+    [Parameter]
+    public string? DayCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
 
-    private sealed class DayViewModel(DayOfWeek dayOfWeek)
+    [Parameter]
+    public string? MondayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Monday)); set; }
+
+    [Parameter]
+    public string? TuesdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Tuesday)); set; }
+
+    [Parameter]
+    public string? WednesdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Wednesday)); set; }
+
+    [Parameter]
+    public string? ThursdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Thursday)); set; }
+
+    [Parameter]
+    public string? FridayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Friday)); set; }
+
+    [Parameter]
+    public string? SaturdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Saturday)); set; }
+
+    [Parameter]
+    public string? SundayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Sunday)); set; }
+
+    private sealed class DayViewModel(DayOfWeek dayOfWeek, string text)
     {
-        public string Text => Day.ToFriendlyString();
+        public string Text { get; } = text;
         public DayOfWeek Day { get; } = dayOfWeek;
         public IDaily? Daily { get; set; }
     }
 
-    private readonly IEnumerable<DayViewModel> _days = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayViewModel(x))];
+    private IEnumerable<DayViewModel> _days = [];
     private IEnumerable<DayViewModel> _selectedDays = [];
+
+    protected override void OnInitialized()
+    {
+        _days = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayViewModel(x, LocalizeDay(x)))];
+    }
+
+    private string LocalizeDay(DayOfWeek day) => day switch
+    {
+        DayOfWeek.Monday => MondayText ?? "Monday",
+        DayOfWeek.Tuesday => TuesdayText ?? "Tuesday",
+        DayOfWeek.Wednesday => WednesdayText ?? "Wednesday",
+        DayOfWeek.Thursday => ThursdayText ?? "Thursday",
+        DayOfWeek.Friday => FridayText ?? "Friday",
+        DayOfWeek.Saturday => SaturdayText ?? "Saturday",
+        DayOfWeek.Sunday => SundayText ?? "Sunday",
+        _ => throw new ArgumentOutOfRangeException(nameof(day), day, "The day must be between Sunday and Saturday.")
+    };
 
     private async Task OnChanged()
     {

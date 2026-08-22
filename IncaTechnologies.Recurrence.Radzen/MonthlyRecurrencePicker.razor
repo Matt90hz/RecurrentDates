@@ -1,7 +1,7 @@
 <RadzenStack Visible=@Visible>
     <RadzenStack Orientation="Orientation.Horizontal">
-        <RadzenButton Text="Specifica numero" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Disabled=@Disabled Click="OnAggiungiGiornoClick" />
-        <RadzenButton Text="Specifica giorno" Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Disabled=@Disabled Click="OnAggiungiSettimanaClick" />
+        <RadzenButton Text=@SpecifyNumberButtonText Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Disabled=@Disabled Click="OnAggiungiGiornoClick" />
+        <RadzenButton Text=@SpecifyDayButtonText Size="ButtonSize.ExtraSmall" Variant="Variant.Text" Disabled=@Disabled Click="OnAggiungiSettimanaClick" />
     </RadzenStack>
     <RadzenStack Gap="0.5rem">
         @foreach (var (i, vm) in _viewModels.Index())
@@ -12,7 +12,7 @@
 
                         @if (vm is DayOfMonthViewModel dom)
                         {
-                            <RadzenFormField Text="Numero" Style="flex-grow: 1">
+                            <RadzenFormField Text=@NumberCaption Style="flex-grow: 1">
                                 <ChildContent>
                                     <RadzenNumeric Name=@($"nuGiornoNelMese{i}{vm.GetHashCode()}")
                                                    @bind-Value=dom.DayOfMonth
@@ -32,10 +32,12 @@
                         {
                             <RadzenRow Style="flex-grow: 1">
                                 <RadzenColumn>
-                                    <RadzenFormField class="rz-w-100" Text="Nel">
+                                        <RadzenFormField class="rz-w-100" Text=@TheCaption>
                                         <ChildContent>
                                             <RadzenDropDown Name=@($"ddSettimanaNelMese{i}{vm.GetHashCode()}")
                                                             @bind-Value=dim.DayInMonth
+                                                            ValueProperty=@nameof(DayInMonthOption.Value)
+                                                            TextProperty=@nameof(DayInMonthOption.Text)
                                                             Data=_daysInMonth
                                                             Disabled=@Disabled
                                                             Change=OnChanged />
@@ -46,10 +48,12 @@
                                     </RadzenFormField>
                                 </RadzenColumn>
                                 <RadzenColumn>
-                                    <RadzenFormField class="rz-w-100" Text="Giorno">
+                                    <RadzenFormField class="rz-w-100" Text=@DayCaption>
                                         <ChildContent>
                                             <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}{vm.GetHashCode()}")
                                                             @bind-Value=dim.DayOfWeek
+                                                            ValueProperty=@nameof(DayOfWeekOption.Value)
+                                                            TextProperty=@nameof(DayOfWeekOption.Text)
                                                             Data=_daysOfWeek
                                                             Disabled=@Disabled
                                                             Change=OnChanged />
@@ -62,7 +66,7 @@
                             </RadzenRow>
                         }
 
-                        <RadzenButton Text="Rimuovi"
+                        <RadzenButton Text=@RemoveButtonText
                                       Style="align-self: center"
                                       Size="ButtonSize.ExtraSmall"
                                       Variant="Variant.Text"
@@ -82,6 +86,73 @@
 @using IncaTechnologies.Recurrence
 @code {
 
+    [Parameter]
+    public string? SpecifyNumberButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_SpecifyNumber)); set; }
+
+    [Parameter]
+    public string? SpecifyDayButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_SpecifyDay)); set; }
+
+    [Parameter]
+    public string? NumberCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Number)); set; }
+
+    [Parameter]
+    public string? TheCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_The)); set; }
+
+    [Parameter]
+    public string? DayCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
+
+    [Parameter]
+    public string? RemoveButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Remove)); set; }
+
+    [Parameter]
+    public string? FirstText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_First)); set; }
+
+    [Parameter]
+    public string? SecondText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Second)); set; }
+
+    [Parameter]
+    public string? ThirdText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Third)); set; }
+
+    [Parameter]
+    public string? FourthText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Fourth)); set; }
+
+    [Parameter]
+    public string? LastText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Last)); set; }
+
+    [Parameter]
+    public string? MondayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Monday)); set; }
+
+    [Parameter]
+    public string? TuesdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Tuesday)); set; }
+
+    [Parameter]
+    public string? WednesdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Wednesday)); set; }
+
+    [Parameter]
+    public string? ThursdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Thursday)); set; }
+
+    [Parameter]
+    public string? FridayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Friday)); set; }
+
+    [Parameter]
+    public string? SaturdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Saturday)); set; }
+
+    [Parameter]
+    public string? SundayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Sunday)); set; }
+
+    private sealed class DayInMonthOption(DayInMonth value, string text)
+    {
+        public DayInMonth Value { get; } = value;
+        public string Text { get; } = text;
+    }
+
+    private sealed class DayOfWeekOption(DayOfWeek value, string text)
+    {
+        public DayOfWeek Value { get; } = value;
+        public string Text { get; } = text;
+    }
+
+
     private abstract class MonthlyViewModel
     {
         public IDaily? DailyRecurrence { get; set; }
@@ -94,13 +165,41 @@
 
     private sealed class DayInMonthViewModel : MonthlyViewModel
     {
-        public string? DayInMonth { get; set; } 
-        public string? DayOfWeek { get; set; }
+        public DayInMonth? DayInMonth { get; set; }
+        public DayOfWeek? DayOfWeek { get; set; }
     }
 
-    private static readonly string[] _daysInMonth = [.. Enum.GetValues<DayInMonth>().Select(FormatterRecurrent.ToFriendlyString)];
-    private static readonly string[] _daysOfWeek = [.. Enum.GetValues<DayOfWeek>().Select(FormatterRecurrent.ToFriendlyString)];
+    private IEnumerable<DayInMonthOption> _daysInMonth = [];
+    private IEnumerable<DayOfWeekOption> _daysOfWeek = [];
     private readonly List<MonthlyViewModel> _viewModels = [];
+
+    protected override void OnInitialized()
+    {
+        _daysInMonth = [.. Enum.GetValues<DayInMonth>().Select(x => new DayInMonthOption(x, LocalizeDayInMonth(x)))];
+        _daysOfWeek = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayOfWeekOption(x, LocalizeDayOfWeek(x)))];
+    }
+
+    private string LocalizeDayInMonth(DayInMonth day) => day switch
+    {
+        DayInMonth.First => FirstText ?? "First",
+        DayInMonth.Second => SecondText ?? "Second",
+        DayInMonth.Third => ThirdText ?? "Third",
+        DayInMonth.Fourth => FourthText ?? "Fourth",
+        DayInMonth.Last => LastText ?? "Last",
+        _ => throw new ArgumentOutOfRangeException(nameof(day), day, "The day must be a supported ordinal.")
+    };
+
+    private string LocalizeDayOfWeek(DayOfWeek day) => day switch
+    {
+        DayOfWeek.Monday => MondayText ?? "Monday",
+        DayOfWeek.Tuesday => TuesdayText ?? "Tuesday",
+        DayOfWeek.Wednesday => WednesdayText ?? "Wednesday",
+        DayOfWeek.Thursday => ThursdayText ?? "Thursday",
+        DayOfWeek.Friday => FridayText ?? "Friday",
+        DayOfWeek.Saturday => SaturdayText ?? "Saturday",
+        DayOfWeek.Sunday => SundayText ?? "Sunday",
+        _ => throw new ArgumentOutOfRangeException(nameof(day), day, "The day must be between Sunday and Saturday.")
+    };
 
     private async Task OnAggiungiGiornoClick()
     {
@@ -143,7 +242,7 @@
                 var hourly = vm switch
                 {
                     DayOfMonthViewModel { DayOfMonth: int d } => the.Day(d),
-                    DayInMonthViewModel { DayInMonth: string w, DayOfWeek: string d } => the.SetDayInMonth(ParseDayInMonth(w), ParseDayOfWeek(d)),
+                    DayInMonthViewModel { DayInMonth: DayInMonth w, DayOfWeek: DayOfWeek d } => the.SetDayInMonth(w, d),
                     _ => throw new Exception("Should be impossible to reach.")
                 };
 
@@ -160,25 +259,4 @@
         return (IMonthly)monthly.GetRoot();
     }
 
-    private static DayInMonth ParseDayInMonth(string x) => x switch
-    {
-        "Primo" => DayInMonth.First,
-        "Secondo" => DayInMonth.Second,
-        "Terzo" => DayInMonth.Third,
-        "Quarto" => DayInMonth.Fourth,
-        "Ultimo" => DayInMonth.Last,
-        _ => throw new ArgumentException($"Impossible to parse day in month '{x}'.", nameof(x))
-    };
-
-    private static DayOfWeek ParseDayOfWeek(string x) => x switch
-    {
-        "Lunedì" => DayOfWeek.Monday,
-        "Martedì" => DayOfWeek.Tuesday,
-        "Mercoledì" => DayOfWeek.Wednesday,
-        "Giovedì" => DayOfWeek.Thursday,
-        "Venerdì" => DayOfWeek.Friday,
-        "Sabato" => DayOfWeek.Saturday,
-        "Domenica" => DayOfWeek.Sunday,
-        _ => throw new ArgumentException($"Impossible to parse day of week '{x}'.", nameof(x))
-    };
 }

@@ -1,5 +1,5 @@
 <RadzenStack Visible=@Visible>
-    <RadzenFormField Text="Nei mesi di">
+    <RadzenFormField Text=@InMonthsCaption>
         <ChildContent>
             <RadzenDropDown Name="ddMesi"
                             @bind-Value=_selectedMonths
@@ -23,8 +23,49 @@
 </RadzenStack>
 
 @inherits FormComponent<IYearly?>
+@inject ILocalizer _localizer;
 @using IncaTechnologies.Recurrence
 @code {
+
+    [Parameter]
+    public string? InMonthsCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_InMonths)); set; }
+
+    [Parameter]
+    public string? JanuaryText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_January)); set; }
+
+    [Parameter]
+    public string? FebruaryText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_February)); set; }
+
+    [Parameter]
+    public string? MarchText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_March)); set; }
+
+    [Parameter]
+    public string? AprilText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_April)); set; }
+
+    [Parameter]
+    public string? MayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_May)); set; }
+
+    [Parameter]
+    public string? JuneText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_June)); set; }
+
+    [Parameter]
+    public string? JulyText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_July)); set; }
+
+    [Parameter]
+    public string? AugustText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_August)); set; }
+
+    [Parameter]
+    public string? SeptemberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_September)); set; }
+
+    [Parameter]
+    public string? OctoberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_October)); set; }
+
+    [Parameter]
+    public string? NovemberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_November)); set; }
+
+    [Parameter]
+    public string? DecemberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_December)); set; }
+
     private sealed class MonthViewModel(int month, string text)
     {
         public string Text { get; } = text;
@@ -32,8 +73,27 @@
         public IMonthly? MonthlyRecurrence { get; set; }
     }
 
-    private static readonly IEnumerable<MonthViewModel> _months = [.. FormatterRecurrent.Mesi.Select((x, i) => new MonthViewModel(i + 1, x))];
+    private IEnumerable<MonthViewModel> _months = [];
     private IEnumerable<MonthViewModel> _selectedMonths = [];
+
+    protected override void OnInitialized()
+    {
+        _months =
+        [
+            new(1, JanuaryText ?? "January"),
+            new(2, FebruaryText ?? "February"),
+            new(3, MarchText ?? "March"),
+            new(4, AprilText ?? "April"),
+            new(5, MayText ?? "May"),
+            new(6, JuneText ?? "June"),
+            new(7, JulyText ?? "July"),
+            new(8, AugustText ?? "August"),
+            new(9, SeptemberText ?? "September"),
+            new(10, OctoberText ?? "October"),
+            new(11, NovemberText ?? "November"),
+            new(12, DecemberText ?? "December")
+        ];
+    }
 
     private async Task OnChanged()
     {

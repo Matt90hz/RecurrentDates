@@ -1,32 +1,77 @@
 ﻿<RadzenStack Visible=@Visible>
-    <RadzenFormField Text="Ogni">
-        <RadzenDropDown Disabled=@Disabled @bind-Value=_ogni Data=_ogniOpzioni Change="@(x => OnChanged(null))" />
+    <RadzenFormField Text=@EveryText>
+        <RadzenDropDown Disabled=@Disabled
+                        @bind-Value=_selectedFrequency
+                        TextProperty=@nameof(FrequencyViewModel.Text)
+                        Data=_frequencies
+                        Change="@(x => OnChanged(null))" />
     </RadzenFormField>
 
-    @if (_ogni is "Giorno")
+    @if (_selectedFrequency?.Frequency is Frequency.Day)
     {
         <DailyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
-    else if (_ogni is "Settimana")
+    else if (_selectedFrequency?.Frequency is Frequency.Week)
     {
         <WeeklyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
-    else if (_ogni is "Mese")
+    else if (_selectedFrequency?.Frequency is Frequency.Month)
     {
         <MonthlyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
-    else if (_ogni is "Anno")
+    else if (_selectedFrequency?.Frequency is Frequency.Year)
     {
         <YearlyRecurrencePicker Disabled=@Disabled Change=OnChanged />
     }
 </RadzenStack>
 
 @inherits FormComponent<IRecurrent?>
+@inject ILocalizer _localizer;
 @using IncaTechnologies.Recurrence
 @code 
 {
-    private static readonly string[] _ogniOpzioni = ["Giorno", "Settimana", "Mese", "Anno"];
-    private string? _ogni;
+    [Parameter]
+    public string? EveryText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Every)); set; }
+
+    [Parameter]
+    public string? DayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
+
+    [Parameter]
+    public string? WeekText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Week)); set; }
+
+    [Parameter]
+    public string? MonthText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month)); set; }
+
+    [Parameter]
+    public string? YearText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Year)); set; }
+
+    private enum Frequency
+    {
+        Day,
+        Week,
+        Month,
+        Year
+    }
+
+    private sealed class FrequencyViewModel(Frequency frequency, string text)
+    {
+        public Frequency Frequency { get; } = frequency;
+        public string Text { get; } = text;
+    }
+
+    private IEnumerable<FrequencyViewModel> _frequencies = [];
+    private FrequencyViewModel? _selectedFrequency;
+
+    protected override void OnInitialized()
+    {
+        _frequencies =
+        [
+            new(Frequency.Day, DayText),
+            new(Frequency.Week, WeekText),
+            new(Frequency.Month, MonthText),
+            new(Frequency.Year, YearText)
+        ];
+    }
 
     private async Task OnChanged(IRecurrent? recurrence)
     {
