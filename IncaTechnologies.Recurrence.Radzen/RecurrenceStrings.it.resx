@@ -228,4 +228,16 @@
   <data name="Inca_Year" xml:space="preserve">
     <value>Anno</value>
   </data>
+  <data name="Inca_In" xml:space="preserve">
+    <value>In</value>
+  </data>
+  <data name="Inca_The_Female" xml:space="preserve">
+    <value>La</value>
+  </data>
+  <data name="Inca_The_Male" xml:space="preserve">
+    <value>Il</value>
+  </data>
+  <data name="Inca_On" xml:space="preserve">
+    <value>Di</value>
+  </data>
 </root>

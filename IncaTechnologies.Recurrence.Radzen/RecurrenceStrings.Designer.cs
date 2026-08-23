@@ -151,6 +151,15 @@ namespace IncaTechnologies.Recurrence.Radzen {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to In.
+        /// </summary>
+        internal static string Inca_In {
+            get {
+                return ResourceManager.GetString("Inca_In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In months.
         /// </summary>
         internal static string Inca_InMonths {
@@ -286,6 +295,15 @@ namespace IncaTechnologies.Recurrence.Radzen {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to On.
+        /// </summary>
+        internal static string Inca_On {
+            get {
+                return ResourceManager.GetString("Inca_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First.
         /// </summary>
         internal static string Inca_Ordinal_First {
@@ -372,6 +390,24 @@ namespace IncaTechnologies.Recurrence.Radzen {
         internal static string Inca_The {
             get {
                 return ResourceManager.GetString("Inca_The", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The.
+        /// </summary>
+        internal static string Inca_The_Female {
+            get {
+                return ResourceManager.GetString("Inca_The_Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The.
+        /// </summary>
+        internal static string Inca_The_Male {
+            get {
+                return ResourceManager.GetString("Inca_The_Male", resourceCulture);
             }
         }
         
