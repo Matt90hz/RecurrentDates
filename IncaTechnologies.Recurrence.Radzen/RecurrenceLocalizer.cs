@@ -1,5 +1,6 @@
 ﻿using Radzen;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 
 namespace IncaTechnologies.Recurrence.Radzen;
 

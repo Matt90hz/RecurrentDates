@@ -1,5 +1,5 @@
 <RadzenStack Visible=@Visible>
-    <RadzenFormField Text=@DayCaption Style="width: 100%">
+    <RadzenFormField Text=@DropDownDayOfWeekCaption Style="width: 100%">
         <ChildContent>
             <RadzenDropDown Name="ddGiorno"
                             @bind-Value=_selectedDays
@@ -29,7 +29,7 @@
 @using IncaTechnologies.Recurrence
 @code {
     [Parameter]
-    public string? DayCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
+    public string? DropDownDayOfWeekCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
 
     [Parameter]
     public string? MondayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Monday)); set; }

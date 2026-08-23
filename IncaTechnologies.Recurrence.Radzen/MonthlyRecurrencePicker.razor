@@ -12,7 +12,7 @@
 
                         @if (vm is DayOfMonthViewModel dom)
                         {
-                            <RadzenFormField Text=@NumberCaption Style="flex-grow: 1">
+                            <RadzenFormField Text=@NumberInputFieldCaption Style="flex-grow: 1">
                                 <ChildContent>
                                     <RadzenNumeric Name=@($"nuGiornoNelMese{i}{vm.GetHashCode()}")
                                                    @bind-Value=dom.DayOfMonth
@@ -32,7 +32,7 @@
                         {
                             <RadzenRow Style="flex-grow: 1">
                                 <RadzenColumn>
-                                        <RadzenFormField class="rz-w-100" Text=@TheCaption>
+                                        <RadzenFormField class="rz-w-100" Text=@DropDownDayInMonthCaption>
                                         <ChildContent>
                                             <RadzenDropDown Name=@($"ddSettimanaNelMese{i}{vm.GetHashCode()}")
                                                             @bind-Value=dim.DayInMonth
@@ -48,7 +48,7 @@
                                     </RadzenFormField>
                                 </RadzenColumn>
                                 <RadzenColumn>
-                                    <RadzenFormField class="rz-w-100" Text=@DayCaption>
+                                    <RadzenFormField class="rz-w-100" Text=@DropDownDayOfWeekCaption>
                                         <ChildContent>
                                             <RadzenDropDown Name=@($"ddGiornoDellaSettimana{i}{vm.GetHashCode()}")
                                                             @bind-Value=dim.DayOfWeek
@@ -93,13 +93,13 @@
     public string? SpecifyDayButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_SpecifyDay)); set; }
 
     [Parameter]
-    public string? NumberCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Number)); set; }
+    public string? NumberInputFieldCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Number)); set; }
 
     [Parameter]
-    public string? TheCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_The)); set; }
+    public string? DropDownDayInMonthCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_The)); set; }
 
     [Parameter]
-    public string? DayCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
+    public string? DropDownDayOfWeekCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
 
     [Parameter]
     public string? RemoveButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Remove)); set; }

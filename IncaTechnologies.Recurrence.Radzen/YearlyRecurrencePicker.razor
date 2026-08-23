@@ -1,5 +1,5 @@
 <RadzenStack Visible=@Visible>
-    <RadzenFormField Text=@InMonthsCaption>
+    <RadzenFormField Text=@MonthsSelectionDropDownCaption>
         <ChildContent>
             <RadzenDropDown Name="ddMesi"
                             @bind-Value=_selectedMonths
@@ -23,12 +23,11 @@
 </RadzenStack>
 
 @inherits FormComponent<IYearly?>
-@inject ILocalizer _localizer;
 @using IncaTechnologies.Recurrence
 @code {
 
     [Parameter]
-    public string? InMonthsCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_InMonths)); set; }
+    public string? MonthsSelectionDropDownCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_InMonths)); set; }
 
     [Parameter]
     public string? JanuaryText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_January)); set; }
