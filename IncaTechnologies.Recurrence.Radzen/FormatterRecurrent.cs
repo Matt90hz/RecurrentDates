@@ -87,7 +87,7 @@ public static class FormatterRecurrent
         return sb;
     }
 
-    private static string Localize(ILocalizer? localizer, string key, string fallback) 
+    private static string Localize(ILocalizer? localizer, string key, string fallback)
         => localizer?.Get(key, CultureInfo.CurrentUICulture) ?? fallback;
 
     /// <summary>
