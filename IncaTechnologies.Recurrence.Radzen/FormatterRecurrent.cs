@@ -17,9 +17,10 @@ public static class FormatterRecurrent
     /// <returns>A human-readable description of the recurrence, ending with a period.</returns>
     public static string ToFriendlyString(this IRecurrent recurrent, ILocalizer? localizer = null)
     {
+        recurrent = recurrent.GetRoot();
         var sb = new StringBuilder();
 
-        sb = recurrent.GetRoot() switch
+        sb = recurrent switch
         {
             IYearly => sb.Append($"{Localize(localizer, nameof(RecurrenceStrings.Inca_Every), RecurrenceStrings.Inca_Every)} {Localize(localizer, nameof(RecurrenceStrings.Inca_Year), RecurrenceStrings.Inca_Year).ToLower(CultureInfo.CurrentUICulture)}"),
             IMonthly => sb.Append($"{Localize(localizer, nameof(RecurrenceStrings.Inca_Every), RecurrenceStrings.Inca_Every)} {Localize(localizer, nameof(RecurrenceStrings.Inca_Month), RecurrenceStrings.Inca_Month).ToLower(CultureInfo.CurrentUICulture)}"),
