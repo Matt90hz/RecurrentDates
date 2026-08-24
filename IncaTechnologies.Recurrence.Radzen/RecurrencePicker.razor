@@ -9,19 +9,19 @@
 
     @if (_selectedFrequency?.Frequency is Frequency.Day)
     {
-        <DailyRecurrencePicker Disabled=@Disabled Change=OnChanged />
+        <DailyRecurrencePicker Value=@(Value as IDaily) Disabled=@Disabled Change=OnChanged />
     }
     else if (_selectedFrequency?.Frequency is Frequency.Week)
     {
-        <WeeklyRecurrencePicker Disabled=@Disabled Change=OnChanged />
+        <WeeklyRecurrencePicker Value=@(Value as IWeekly) Disabled=@Disabled Change=OnChanged />
     }
     else if (_selectedFrequency?.Frequency is Frequency.Month)
     {
-        <MonthlyRecurrencePicker Disabled=@Disabled Change=OnChanged />
+        <MonthlyRecurrencePicker Value=@(Value as IMonthly) Disabled=@Disabled Change=OnChanged />
     }
     else if (_selectedFrequency?.Frequency is Frequency.Year)
     {
-        <YearlyRecurrencePicker Disabled=@Disabled Change=OnChanged />
+        <YearlyRecurrencePicker Value=@(Value as IYearly) Disabled=@Disabled Change=OnChanged />
     }
 </RadzenStack>
 
@@ -73,8 +73,8 @@
     }
 
     private IEnumerable<FrequencyViewModel> _frequencies = [];
-
     private FrequencyViewModel? _selectedFrequency;
+    private bool _initialized = false;
 
     protected override void OnInitialized()
     {
@@ -85,6 +85,22 @@
             new(Frequency.Month, MonthText ?? "Month"),
             new(Frequency.Year, YearText ?? "Year")
         ];
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Value is not IRecurrent recurrent || _initialized) return;
+
+        _selectedFrequency = recurrent.GetRoot() switch
+        {
+            IDaily d => _frequencies.First(x => x.Frequency is Frequency.Day),
+            IWeekly d => _frequencies.First(x => x.Frequency is Frequency.Week),
+            IMonthly d => _frequencies.First(x => x.Frequency is Frequency.Month),
+            IYearly d => _frequencies.First(x => x.Frequency is Frequency.Year),
+            _ => null
+        };
+
+        _initialized = true;
     }
 
     private async Task OnChanged(IRecurrent? recurrence)
