@@ -83,6 +83,22 @@
         _days = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayViewModel(x, LocalizeDay(x)))];
     }
 
+    private bool _initialized;
+
+    protected override void OnParametersSet()
+    {
+        if (Value is not IWeekly weekly || _initialized) return;
+
+        _selectedDays = [.. weekly.SelectOn(on =>
+        {
+            var day = _days.First(day => day.Day == on.DayOfWeek);
+            day.Daily = on.Then;
+            return day;
+        })];
+
+        _initialized = true;
+    }
+
     private string LocalizeDay(DayOfWeek day) => day switch
     {
         DayOfWeek.Monday => MondayText ?? "Monday",

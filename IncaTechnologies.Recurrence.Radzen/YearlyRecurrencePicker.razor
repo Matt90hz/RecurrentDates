@@ -24,7 +24,7 @@
 
 @inherits FormComponent<IYearly?>
 @using IncaTechnologies.Recurrence
-@code {
+    @code {
 
     /// <summary>Gets or sets the caption displayed above the month selector.</summary>
     /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
@@ -118,6 +118,22 @@
             new(11, NovemberText ?? "November"),
             new(12, DecemberText ?? "December")
         ];
+    }
+
+    private bool _initialized;
+
+    protected override void OnParametersSet()
+    {
+        if (Value is not IYearly yearly || _initialized) return;
+
+        _selectedMonths = [.. yearly.SelectIn(x =>
+        {
+            var month = _months.First(month => month.Month == x.Month);
+            month.MonthlyRecurrence = x.Then;
+            return month;
+        })];
+
+        _initialized = true;
     }
 
     private async Task OnChanged()

@@ -215,6 +215,28 @@
         _daysOfWeek = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayOfWeekOption(x, LocalizeDayOfWeek(x)))];
     }
 
+    private bool _initialized;
+
+    protected override void OnParametersSet()
+    {
+        if (Value is not IMonthly monthly || _initialized) return;
+
+        monthly.ForEachThe(
+            x => _viewModels.Add(new DayOfMonthViewModel
+            {
+                DayOfMonth = x.DayOfMonth,
+                DailyRecurrence = x.Then
+            }),
+            x => _viewModels.Add(new DayInMonthViewModel
+            {
+                DayInMonth = x.DayInMonth,
+                DayOfWeek = x.DayOfWeek,
+                DailyRecurrence = x.Then
+            }));
+
+        _initialized = true;
+    }
+
     private string LocalizeDayInMonth(DayInMonth day) => day switch
     {
         DayInMonth.First => FirstText ?? "First",

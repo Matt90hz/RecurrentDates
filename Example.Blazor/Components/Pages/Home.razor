@@ -6,9 +6,14 @@
 <PageTitle>Home</PageTitle>
 
 <RadzenTemplateForm TItem="ViewModel" Data=@model Style="width: 1200px; margin: 20px" Submit=OnSubmit InvalidSubmit=OnInvalid>
-    <RadzenStack >
-        <RadzenButton Text="Use recurrence" Click=OnUseRecurrenceClick />
-        <RadzenRow >
+    <RadzenStack>
+        <RadzenStack Orientation="Orientation.Horizontal">
+            <RadzenButton Text="Use year" Click=@(() => OnUseRecurrenceClick("year")) />
+            <RadzenButton Text="Use month" Click=@(() => OnUseRecurrenceClick("month")) />
+            <RadzenButton Text="Use week" Click=@(() => OnUseRecurrenceClick("week")) />
+            <RadzenButton Text="Use day" Click=@(() => OnUseRecurrenceClick("day")) />
+        </RadzenStack>
+        <RadzenRow>
             <RadzenColumn>
                 <RecurrencePicker Name="picker" @bind-Value=model.Recurrent />
                 <RadzenRequiredValidator Component="picker" />
@@ -43,8 +48,46 @@
         _notification.Notify(NotificationSeverity.Error, args.Errors?.First() ?? "");
     }
 
-    private void OnUseRecurrenceClick()
+    private void OnUseRecurrenceClick(string recurrent)
     {
-        model.Recurrent = Occurs.EveryMonth().Day(15).Hour(21).Minute(0).GetRoot();
+        var newValue = recurrent switch
+        {
+            "year" => Occurs.EveryYear().In(x =>
+            {
+                x.February().Day(29);
+                x.November().SecondMonday().At(x =>
+                {
+                    x.Hour(10).Minute(30); x.Hour(21).Minute(30);
+                });
+            }),
+
+            "month" => Occurs.EveryMonth().The(x => 
+            { 
+                x.Day(29).Hour(4).Minute(20); 
+                x.SecondMonday().At(x => 
+                { 
+                    x.Hour(10).Minute(30); 
+                    x.Hour(21).Minute(30); 
+                }); 
+            }),
+
+            "week" => Occurs.EveryWeek().On(x => 
+            { 
+                x.Monday(); x.Friday().At(x => 
+                { 
+                    x.Hour(10).Minute(30); 
+                    x.Hour(21).Minute(30); }); 
+            }),
+
+            "day" => Occurs.EveryDay().At(x => 
+            { 
+                x.Hour(10).Minute(30); 
+                x.Hour(21).Minute(30); 
+            }),
+
+            _ => null
+        };
+
+        model.Recurrent = newValue.GetRoot();
     }
 }
