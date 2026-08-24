@@ -28,30 +28,43 @@
 @inherits FormComponent<IRecurrent?>
 @inject ILocalizer _localizer;
 @using IncaTechnologies.Recurrence
-@code 
+@code
 {
+    /// <summary>Gets or sets the label displayed above the recurrence frequency selector.</summary>
+    /// <remarks>When no value is provided, the localized <c>Inca_Every</c> string is used.</remarks>
     [Parameter]
     public string? EveryText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Every)); set; }
 
+    /// <summary>Gets or sets the display text for the daily recurrence option.</summary>
+    /// <remarks>When no value is provided, the localized <c>Inca_Day</c> string is used.</remarks>
     [Parameter]
     public string? DayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
 
+    /// <summary>Gets or sets the display text for the weekly recurrence option.</summary>
+    /// <remarks>When no value is provided, the localized <c>Inca_Week</c> string is used.</remarks>
     [Parameter]
     public string? WeekText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Week)); set; }
 
+    /// <summary>Gets or sets the display text for the monthly recurrence option.</summary>
+    /// <remarks>When no value is provided, the localized <c>Inca_Month</c> string is used.</remarks>
     [Parameter]
     public string? MonthText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month)); set; }
 
+    /// <summary>Gets or sets the display text for the yearly recurrence option.</summary>
+    /// <remarks>When no value is provided, the localized <c>Inca_Year</c> string is used.</remarks>
     [Parameter]
     public string? YearText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Year)); set; }
 
+
     private enum Frequency
     {
+
         Day,
         Week,
         Month,
         Year
     }
+
 
     private sealed class FrequencyViewModel(Frequency frequency, string text)
     {
@@ -60,16 +73,17 @@
     }
 
     private IEnumerable<FrequencyViewModel> _frequencies = [];
+
     private FrequencyViewModel? _selectedFrequency;
 
     protected override void OnInitialized()
     {
         _frequencies =
         [
-            new(Frequency.Day, DayText),
-            new(Frequency.Week, WeekText),
-            new(Frequency.Month, MonthText),
-            new(Frequency.Year, YearText)
+            new(Frequency.Day, DayText ?? "Day"),
+            new(Frequency.Week, WeekText ?? "Week"),
+            new(Frequency.Month, MonthText ?? "Month"),
+            new(Frequency.Year, YearText ?? "Year")
         ];
     }
 

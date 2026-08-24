@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+	<ScopedCssEnabled>false</ScopedCssEnabled>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
@@ -17,8 +18,8 @@
     <PackageTags>recurrence;recurring dates;recurring times;dates;times;calendar;scheduling;Radzen;Blazor;.NET</PackageTags>
     <PackageReleaseNotes>v1.0.0-beta - Release</PackageReleaseNotes>    <AssemblyVersion></AssemblyVersion>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-    <PackageOutputPath>\.nupkg</PackageOutputPath>
-    <Version>v1.0.0-beta</Version>
+    <PackageOutputPath>.nupkg</PackageOutputPath>
+    <Version>1.0.0-beta</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

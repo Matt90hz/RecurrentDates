@@ -86,57 +86,93 @@
 @using IncaTechnologies.Recurrence
 @code {
 
+    /// <summary>Gets or sets the text displayed on the button for adding a day-of-month rule.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? SpecifyNumberButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_SpecifyNumber)); set; }
 
+    /// <summary>Gets or sets the text displayed on the button for adding an ordinal weekday rule.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? SpecifyDayButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_SpecifyDay)); set; }
 
+    /// <summary>Gets or sets the caption displayed for the day-of-month input.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? NumberInputFieldCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Number)); set; }
 
+    /// <summary>Gets or sets the caption displayed for the ordinal day selector.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? DropDownDayInMonthCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_The)); set; }
 
+    /// <summary>Gets or sets the caption displayed for the day-of-week selector.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? DropDownDayOfWeekCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Day)); set; }
 
+    /// <summary>Gets or sets the text displayed on the rule removal button.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? RemoveButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Remove)); set; }
 
+    /// <summary>Gets or sets the display text for the first ordinal.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? FirstText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_First)); set; }
 
+    /// <summary>Gets or sets the display text for the second ordinal.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? SecondText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Second)); set; }
 
+    /// <summary>Gets or sets the display text for the third ordinal.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? ThirdText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Third)); set; }
 
+    /// <summary>Gets or sets the display text for the fourth ordinal.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? FourthText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Fourth)); set; }
 
+    /// <summary>Gets or sets the display text for the last ordinal.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? LastText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Ordinal_Last)); set; }
 
+    /// <summary>Gets or sets the display text for Monday.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? MondayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Monday)); set; }
 
+    /// <summary>Gets or sets the display text for Tuesday.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? TuesdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Tuesday)); set; }
 
+    /// <summary>Gets or sets the display text for Wednesday.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? WednesdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Wednesday)); set; }
 
+    /// <summary>Gets or sets the display text for Thursday.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? ThursdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Thursday)); set; }
 
+    /// <summary>Gets or sets the display text for Friday.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? FridayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Friday)); set; }
 
+    /// <summary>Gets or sets the display text for Saturday.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? SaturdayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Saturday)); set; }
 
+    /// <summary>Gets or sets the display text for Sunday.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? SundayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Sunday)); set; }
 

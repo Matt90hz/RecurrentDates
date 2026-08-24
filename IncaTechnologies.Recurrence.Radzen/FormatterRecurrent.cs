@@ -4,8 +4,17 @@ using System.Text;
 
 namespace IncaTechnologies.Recurrence.Radzen;
 
+/// <summary>
+/// Provides friendly, localized text representations of recurrence definitions.
+/// </summary>
 public static class FormatterRecurrent
 {
+    /// <summary>
+    /// Formats a recurrence definition as a human-readable sentence.
+    /// </summary>
+    /// <param name="recurrent">The recurrence definition to format.</param>
+    /// <param name="localizer">The optional localizer used to translate recurrence terms.</param>
+    /// <returns>A human-readable description of the recurrence, ending with a period.</returns>
     public static string ToFriendlyString(this IRecurrent recurrent, ILocalizer? localizer = null)
     {
         var sb = new StringBuilder();
@@ -81,7 +90,13 @@ public static class FormatterRecurrent
     private static string Localize(ILocalizer? localizer, string key, string fallback) 
         => localizer?.Get(key, CultureInfo.CurrentUICulture) ?? fallback;
 
-    private static string ToFriendlyString(this int month, ILocalizer? localizer) => month switch
+    /// <summary>
+    /// Gets the localized name of a month number.
+    /// </summary>
+    /// <param name="month">The month number, from 1 through 12.</param>
+    /// <param name="localizer">The optional localizer used to translate the month name.</param>
+    /// <returns>The localized month name, or an empty string for an invalid month number.</returns>
+    public static string ToFriendlyString(this int month, ILocalizer? localizer) => month switch
     {
         1 => Localize(localizer, nameof(RecurrenceStrings.Inca_Month_January), RecurrenceStrings.Inca_Month_January),
         2 => Localize(localizer, nameof(RecurrenceStrings.Inca_Month_February), RecurrenceStrings.Inca_Month_February),
@@ -98,6 +113,12 @@ public static class FormatterRecurrent
         _ => string.Empty
     };
 
+    /// <summary>
+    /// Gets the localized ordinal description of a day within a month.
+    /// </summary>
+    /// <param name="dayInMonth">The ordinal position of the day in the month.</param>
+    /// <param name="localizer">The optional localizer used to translate the ordinal.</param>
+    /// <returns>The localized ordinal description, or an empty string for an unsupported value.</returns>
     public static string ToFriendlyString(this DayInMonth dayInMonth, ILocalizer? localizer = null)
     {
         return dayInMonth switch
@@ -111,6 +132,12 @@ public static class FormatterRecurrent
         };
     }
 
+    /// <summary>
+    /// Gets the localized name of a day of the week.
+    /// </summary>
+    /// <param name="dayOfWeek">The day of the week to format.</param>
+    /// <param name="localizer">The optional localizer used to translate the day name.</param>
+    /// <returns>The localized day name, or an empty string for an unsupported value.</returns>
     public static string ToFriendlyString(this DayOfWeek dayOfWeek, ILocalizer? localizer = null)
     {
         return dayOfWeek switch

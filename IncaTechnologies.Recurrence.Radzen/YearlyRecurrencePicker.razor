@@ -26,42 +26,68 @@
 @using IncaTechnologies.Recurrence
 @code {
 
+    /// <summary>Gets or sets the caption displayed above the month selector.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? MonthsSelectionDropDownCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_InMonths)); set; }
 
+    /// <summary>Gets or sets the display text for January.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? JanuaryText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_January)); set; }
 
+    /// <summary>Gets or sets the display text for February.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? FebruaryText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_February)); set; }
 
+    /// <summary>Gets or sets the display text for March.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? MarchText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_March)); set; }
 
+    /// <summary>Gets or sets the display text for April.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? AprilText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_April)); set; }
 
+    /// <summary>Gets or sets the display text for May.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? MayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_May)); set; }
 
+    /// <summary>Gets or sets the display text for June.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? JuneText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_June)); set; }
 
+    /// <summary>Gets or sets the display text for July.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? JulyText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_July)); set; }
 
+    /// <summary>Gets or sets the display text for August.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? AugustText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_August)); set; }
 
+    /// <summary>Gets or sets the display text for September.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? SeptemberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_September)); set; }
 
+    /// <summary>Gets or sets the display text for October.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? OctoberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_October)); set; }
 
+    /// <summary>Gets or sets the display text for November.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? NovemberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_November)); set; }
 
+    /// <summary>Gets or sets the display text for December.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? DecemberText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Month_December)); set; }
 

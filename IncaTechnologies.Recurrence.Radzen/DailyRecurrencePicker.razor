@@ -45,12 +45,18 @@
 
     private readonly List<TimeViewModel> _times = [];
 
+    /// <summary>Gets or sets the text displayed on the button used to add a time of day.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? SpecifyTimeButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_SpecifyTime)); set; }
 
+    /// <summary>Gets or sets the caption displayed for each time picker.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? TimePickerCaption { get => field ?? Localize(nameof(RecurrenceStrings.Inca_At)); set; }
 
+    /// <summary>Gets or sets the text displayed on the button used to remove a time of day.</summary>
+    /// <remarks>When no value is provided, the localized text from <see cref="RecurrenceStrings"/> is used.</remarks>
     [Parameter]
     public string? RemoveButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Remove)); set; }
 
