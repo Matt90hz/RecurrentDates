@@ -4,6 +4,29 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Title>IncaTechnologies Recurrence Radzen Forms</Title>
+    <Authors>IncaTechnologies</Authors>
+    <Company>IncaTechnologies</Company>
+    <Description>Radzen componets to collect and display recurrent dates/times.</Description>
+    <Copyright>IncaTechnologies 2026</Copyright>
+    <PackageProjectUrl>https://github.com/Matt90hz/RecurrentDates</PackageProjectUrl>
+    <PackageIcon>IncaTechnologies_logo_128x128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryUrl>https://github.com/Matt90hz/RecurrentDates.git</RepositoryUrl>
+    <PackageTags>recurrence;recurring dates;recurring times;dates;times;calendar;scheduling;Radzen;Blazor;.NET</PackageTags>
+    <PackageReleaseNotes>v1.0.0-beta - Release</PackageReleaseNotes>
+    <AssemblyVersion>1.0.0-beta</AssemblyVersion>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageOutputPath>\.nupkg</PackageOutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,6 +44,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\..\..\IncaTechnologies\IncaTechnologies_logo_128x128.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="RecurrenceStrings.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -33,4 +63,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>RecurrenceStrings.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup></Project>
