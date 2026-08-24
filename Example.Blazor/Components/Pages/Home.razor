@@ -1,5 +1,5 @@
 ﻿@page "/"
-@using System.Text.Json
+
 @using IncaTechnologies.Recurrence
 @using IncaTechnologies.Recurrence.Radzen
 
@@ -7,6 +7,7 @@
 
 <RadzenTemplateForm TItem="ViewModel" Data=@model Style="width: 1200px; margin: 20px" Submit=OnSubmit InvalidSubmit=OnInvalid>
     <RadzenStack >
+        <RadzenButton Text="Use recurrence" Click=OnUseRecurrenceClick />
         <RadzenRow >
             <RadzenColumn>
                 <RecurrencePicker Name="picker" @bind-Value=model.Recurrent />
@@ -40,5 +41,10 @@
     private void OnInvalid(FormInvalidSubmitEventArgs args)
     {
         _notification.Notify(NotificationSeverity.Error, args.Errors?.First() ?? "");
+    }
+
+    private void OnUseRecurrenceClick()
+    {
+        model.Recurrent = Occurs.EveryMonth().Day(15).Hour(21).Minute(0).GetRoot();
     }
 }
