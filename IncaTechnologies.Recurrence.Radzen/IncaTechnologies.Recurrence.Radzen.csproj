@@ -16,10 +16,10 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryUrl>https://github.com/Matt90hz/RecurrentDates.git</RepositoryUrl>
     <PackageTags>recurrence;recurring dates;recurring times;dates;times;calendar;scheduling;Radzen;Blazor;.NET</PackageTags>
-    <PackageReleaseNotes>v1.0.1-beta - Release</PackageReleaseNotes>    <AssemblyVersion></AssemblyVersion>
+    <PackageReleaseNotes>v1.0.2-beta - Release</PackageReleaseNotes>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <PackageOutputPath>.nupkg</PackageOutputPath>
-    <Version>1.0.1-beta</Version>
+    <Version>1.0.2-beta</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
