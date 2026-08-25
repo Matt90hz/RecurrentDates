@@ -176,6 +176,7 @@
     [Parameter]
     public string? SundayText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_DayOfWeek_Sunday)); set; }
 
+
     private sealed class DayInMonthOption(DayInMonth value, string text)
     {
         public DayInMonth Value { get; } = value;
@@ -187,7 +188,6 @@
         public DayOfWeek Value { get; } = value;
         public string Text { get; } = text;
     }
-
 
     private abstract class MonthlyViewModel
     {
@@ -208,6 +208,7 @@
     private IEnumerable<DayInMonthOption> _daysInMonth = [];
     private IEnumerable<DayOfWeekOption> _daysOfWeek = [];
     private readonly List<MonthlyViewModel> _viewModels = [];
+    private IMonthly? _preValue;
 
     protected override void OnInitialized()
     {
@@ -215,11 +216,11 @@
         _daysOfWeek = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayOfWeekOption(x, LocalizeDayOfWeek(x)))];
     }
 
-    private bool _initialized;
-
     protected override void OnParametersSet()
     {
-        if (Value is not IMonthly monthly || _initialized) return;
+        if (Value is not IMonthly monthly || monthly.ValueEquals(_preValue)) return;
+
+        _viewModels.Clear();
 
         monthly.ForEachThe(
             x => _viewModels.Add(new DayOfMonthViewModel
@@ -234,7 +235,7 @@
                 DailyRecurrence = x.Then
             }));
 
-        _initialized = true;
+        _preValue = monthly;
     }
 
     private string LocalizeDayInMonth(DayInMonth day) => day switch
@@ -262,13 +263,11 @@
     private async Task OnAggiungiGiornoClick()
     {
         _viewModels.Add(new DayOfMonthViewModel());
-        await OnChanged();
     }
 
     private async Task OnAggiungiSettimanaClick()
     {
         _viewModels.Add(new DayInMonthViewModel());
-        await OnChanged();
     }
 
     private async Task OnRimuoviClick(MonthlyViewModel definition)

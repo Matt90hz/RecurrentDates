@@ -34,7 +34,7 @@
 </RadzenStack>
 
 @inherits FormComponent<IDaily?>
-@inject ILocalizer _localizer;
+@inject ILocalizer _localizer
 @using IncaTechnologies.Recurrence
 @code {
 
@@ -59,18 +59,20 @@
     public string? RemoveButtonText { get => field ?? Localize(nameof(RecurrenceStrings.Inca_Remove)); set; }
 
     private readonly List<TimeViewModel> _times = [];
-    private bool _initialized = false;
+    private IDaily? _preValue;
 
     protected override void OnParametersSet()
     {
-        if (Value is not IDaily daily || _initialized) return;
+        if (Value is not IDaily daily || daily.ValueEquals(_preValue)) return;
+
+        _times.Clear();
 
         daily.ForEachAt(at =>
         {
             _times.Add(new() { Time = TimeOnly.Parse($"{at.Hour}:{at.Minute}") });
         });
 
-        _initialized = true;
+        _preValue = daily;
     }
 
     private void OnAggiungiClick()
@@ -97,7 +99,7 @@
 
     private static IDaily? GenerateRecurrence(IEnumerable<TimeViewModel> viewModels)
     {
-        if (viewModels.Any() is false) return null;
+        if (viewModels.Any() is false || viewModels.Any(x => x.Time is null)) return null;
 
         var daily = Occurs.EveryDay().At(x =>
         {

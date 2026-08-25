@@ -100,6 +100,7 @@
 
     private IEnumerable<MonthViewModel> _months = [];
     private IEnumerable<MonthViewModel> _selectedMonths = [];
+    private IYearly? _preValue;
 
     protected override void OnInitialized()
     {
@@ -120,11 +121,9 @@
         ];
     }
 
-    private bool _initialized;
-
     protected override void OnParametersSet()
     {
-        if (Value is not IYearly yearly || _initialized) return;
+        if (Value is not IYearly yearly || yearly.ValueEquals(_preValue)) return;
 
         _selectedMonths = [.. yearly.SelectIn(x =>
         {
@@ -133,7 +132,7 @@
             return month;
         })];
 
-        _initialized = true;
+        _preValue = yearly;
     }
 
     private async Task OnChanged()
@@ -146,7 +145,7 @@
 
     private static IYearly? GenerateRecurrence(IEnumerable<MonthViewModel> viewModels)
     {
-        if (viewModels.Any() is false) return null;
+        if (viewModels.Any() is false || viewModels.Any(x => x.MonthlyRecurrence is null)) return null;
 
         var yearly = Occurs.EveryYear().In(@in =>
         {

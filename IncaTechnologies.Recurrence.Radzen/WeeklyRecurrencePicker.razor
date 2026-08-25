@@ -8,7 +8,7 @@
                             Multiple=true
                             AllowSelectAll=false
                             Disabled=@Disabled
-                            Change=OnChanged>
+                            Change=OnDropDownChange>
             </RadzenDropDown>
         </ChildContent>
         <Helper>
@@ -19,7 +19,7 @@
     @foreach (var day in _selectedDays)
     {
         <RadzenFieldset Text=@day.Text>
-            <DailyRecurrencePicker @key=day.Text @bind-Value=day.Daily Disabled=@Disabled Change=OnChanged />
+            <DailyRecurrencePicker @key=day.Text @bind-Value=day.Daily Disabled=@Disabled Change=OnRecurrencePickerChange />
         </RadzenFieldset>
     }
 </RadzenStack>
@@ -77,17 +77,16 @@
 
     private IEnumerable<DayViewModel> _days = [];
     private IEnumerable<DayViewModel> _selectedDays = [];
+    private IWeekly? _preValue;
 
     protected override void OnInitialized()
     {
         _days = [.. Enum.GetValues<DayOfWeek>().Select(x => new DayViewModel(x, LocalizeDay(x)))];
     }
 
-    private bool _initialized;
-
     protected override void OnParametersSet()
     {
-        if (Value is not IWeekly weekly || _initialized) return;
+        if (Value is not IWeekly weekly || weekly.ValueEquals(_preValue)) return;
 
         _selectedDays = [.. weekly.SelectOn(on =>
         {
@@ -96,7 +95,7 @@
             return day;
         })];
 
-        _initialized = true;
+        _preValue = weekly;
     }
 
     private string LocalizeDay(DayOfWeek day) => day switch
@@ -111,7 +110,15 @@
         _ => throw new ArgumentOutOfRangeException(nameof(day), day, "The day must be between Sunday and Saturday.")
     };
 
-    private async Task OnChanged()
+    private async Task OnDropDownChange()
+    {
+        Value = GenerateRecurrence(_selectedDays);
+
+        await ValueChanged.InvokeAsync(Value);
+        await Change.InvokeAsync(Value);
+    }
+
+    private async Task OnRecurrencePickerChange()
     {
         Value = GenerateRecurrence(_selectedDays);
 
@@ -139,4 +146,6 @@
 
         return (IWeekly)weekly.GetRoot();
     }
+
+    
 }

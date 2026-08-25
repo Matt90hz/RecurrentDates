@@ -23,6 +23,9 @@
                     <RadzenText Text=@model.Recurrent?.ToFriendlyString() />
                 </RadzenFieldset>
             </RadzenColumn>
+            <RadzenColumn>
+                <DailyRecurrencePicker />
+            </RadzenColumn>
         </RadzenRow>
         <RadzenButton Text="Submit" ButtonType=ButtonType.Submit />
     </RadzenStack>
